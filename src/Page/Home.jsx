@@ -141,79 +141,21 @@ export default function Home() {
               <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
 
               <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex items-center gap-1">
-                  <Bed fontSize="small" /> 4 Beds
+                <div className="flex flex-col items-center">
+                  <Bed fontSize="small" />
+                  <span>4 Beds</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Bathtub fontSize="small" /> 5 Baths
+                <div className="flex flex-col items-center">
+                  <Bathtub fontSize="small" />
+                  <span>5 Baths</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Garage fontSize="small" /> 1 Garage
+                <div className="flex flex-col items-center">
+                  <Garage fontSize="small" />
+                  <span>1 Garage</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <SquareFoot fontSize="small" /> 1200 Sq Ft
-                </div>
-              </div>
-
-              <div className="mt-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-400 line-through text-sm">$2,800/mo</p>
-                  <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
-                </div>
-                <div className="flex gap-2">
-                  <IconButton size="small">
-                    <ArrowOutward fontSize="small" />
-                  </IconButton>
-                  <IconButton size="small">
-                    <FavoriteBorder fontSize="small" />
-                  </IconButton>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-[350px] overflow-hidden shadow-lg bg-white">
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                alt="House"
-                className="w-full h-[200px] object-cover"
-              />
-
-              <div className="absolute top-3 left-3 flex gap-42">
-                <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FEATURED
-                </span>
-                <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FOR SALE
-                </span>
-              </div>
-
-              <div className="absolute bottom-[-20px] right-4">
-                <img
-                  src="https://i.pravatar.cc/40"
-                  alt="profile"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-              </div>
-            </div>
-
-            <div className="p-4">
-              <h2 className="text-lg font-bold">New Apartment Nice View</h2>
-              <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
-
-              <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex items-center gap-1">
-                  <Bed fontSize="small" /> 4 Beds
-                </div>
-                <div className="flex items-center gap-1">
-                  <Bathtub fontSize="small" /> 5 Baths
-                </div>
-                <div className="flex items-center gap-1">
-                  <Garage fontSize="small" /> 1 Garage
-                </div>
-                <div className="flex items-center gap-1">
-                  <SquareFoot fontSize="small" /> 1200 Sq Ft
+                <div className="flex flex-col items-center">
+                  <SquareFoot fontSize="small" />
+                  <span>1200 Sq Ft</span>
                 </div>
               </div>
 
@@ -266,19 +208,92 @@ export default function Home() {
               <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
 
               <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex items-center gap-1">
-                  <Bed fontSize="small" /> 4 Beds
+                <div className="flex flex-col items-center">
+                  <Bed fontSize="small" />
+                  <span>4 Beds</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Bathtub fontSize="small" /> 5 Baths
+                <div className="flex flex-col items-center">
+                  <Bathtub fontSize="small" />
+                  <span>5 Baths</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Garage fontSize="small" /> 1 Garage
+                <div className="flex flex-col items-center">
+                  <Garage fontSize="small" />
+                  <span>1 Garage</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <SquareFoot fontSize="small" /> 1200 Sq Ft
+                <div className="flex flex-col items-center">
+                  <SquareFoot fontSize="small" />
+                  <span>1200 Sq Ft</span>
                 </div>
               </div>
+
+
+
+              <div className="mt-4 flex justify-between items-center">
+                <div>
+                  <p className="text-gray-400 line-through text-sm">$2,800/mo</p>
+                  <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
+                </div>
+                <div className="flex gap-2">
+                  <IconButton size="small">
+                    <ArrowOutward fontSize="small" />
+                  </IconButton>
+                  <IconButton size="small">
+                    <FavoriteBorder fontSize="small" />
+                  </IconButton>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-[350px] overflow-hidden shadow-lg bg-white">
+            <div className="relative">
+              <img
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+                alt="House"
+                className="w-full h-[200px] object-cover"
+              />
+
+              <div className="absolute top-3 left-3 flex gap-42">
+                <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                  FEATURED
+                </span>
+                <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                  FOR SALE
+                </span>
+              </div>
+
+              <div className="absolute bottom-[-20px] right-4">
+                <img
+                  src="https://i.pravatar.cc/40"
+                  alt="profile"
+                  className="w-10 h-10 rounded-full border-2 border-white"
+                />
+              </div>
+            </div>
+
+            <div className="p-4">
+              <h2 className="text-lg font-bold">New Apartment Nice View</h2>
+              <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
+
+              <div className="flex justify-between text-gray-600 text-sm mt-3">
+                <div className="flex flex-col items-center">
+                  <Bed fontSize="small" />
+                  <span>4 Beds</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <Bathtub fontSize="small" />
+                  <span>5 Baths</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <Garage fontSize="small" />
+                  <span>1 Garage</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <SquareFoot fontSize="small" />
+                  <span>1200 Sq Ft</span>
+                </div>
+              </div>
+
 
               <div className="mt-4 flex justify-between items-center">
                 <div>
@@ -340,17 +355,53 @@ export default function Home() {
           <p className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</p>
         </div>
         <div className="flex justify-between">
-          <div>
-            <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+          <div className="flex justify-between">
+            <div className="relative">
+              <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img src="assets/Group (1).png" alt="" />
+              </div>
+              <div className="absolute inset-0 flex mt-[100px] items-center text-white justify-center">
+                <p>House</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+          <div className="flex justify-between">
+            <div className="relative">
+              <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img src="assets/Group (1).png" alt="" />
+              </div>
+              <div className="absolute inset-0 flex mt-[100px] items-center text-white justify-center">
+                <p>House</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+          <div className="flex justify-between">
+            <div className="relative">
+              <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img src="assets/Group (1).png" alt="" />
+              </div>
+              <div className="absolute inset-0 flex mt-[100px] items-center text-white justify-center">
+                <p>House</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+          <div className="flex justify-between">
+            <div className="relative">
+              <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img src="assets/Group (1).png" alt="" />
+              </div>
+              <div className="absolute inset-0 flex mt-[100px] items-center text-white justify-center">
+                <p>House</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -414,7 +465,7 @@ export default function Home() {
                 className="w-full h-[200px] object-cover"
               />
 
-              <div className="absolute top-3 left-3 flex gap-2">
+              <div className="absolute top-3 left-3 flex gap-42">
                 <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
                   FEATURED
                 </span>
@@ -437,19 +488,24 @@ export default function Home() {
               <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
 
               <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex items-center gap-1">
-                  <Bed fontSize="small" /> 4 Beds
+                <div className="flex flex-col items-center">
+                  <Bed fontSize="small" />
+                  <span>4 Beds</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Bathtub fontSize="small" /> 5 Baths
+                <div className="flex flex-col items-center">
+                  <Bathtub fontSize="small" />
+                  <span>5 Baths</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Garage fontSize="small" /> 1 Garage
+                <div className="flex flex-col items-center">
+                  <Garage fontSize="small" />
+                  <span>1 Garage</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <SquareFoot fontSize="small" /> 1200 Sq Ft
+                <div className="flex flex-col items-center">
+                  <SquareFoot fontSize="small" />
+                  <span>1200 Sq Ft</span>
                 </div>
               </div>
+
 
               <div className="mt-4 flex justify-between items-center">
                 <div>
@@ -476,7 +532,7 @@ export default function Home() {
                 className="w-full h-[200px] object-cover"
               />
 
-              <div className="absolute top-3 left-3 flex gap-2">
+              <div className="absolute top-3 left-3 flex gap-42">
                 <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
                   FEATURED
                 </span>
@@ -499,19 +555,24 @@ export default function Home() {
               <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
 
               <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex items-center gap-1">
-                  <Bed fontSize="small" /> 4 Beds
+                <div className="flex flex-col items-center">
+                  <Bed fontSize="small" />
+                  <span>4 Beds</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Bathtub fontSize="small" /> 5 Baths
+                <div className="flex flex-col items-center">
+                  <Bathtub fontSize="small" />
+                  <span>5 Baths</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Garage fontSize="small" /> 1 Garage
+                <div className="flex flex-col items-center">
+                  <Garage fontSize="small" />
+                  <span>1 Garage</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <SquareFoot fontSize="small" /> 1200 Sq Ft
+                <div className="flex flex-col items-center">
+                  <SquareFoot fontSize="small" />
+                  <span>1200 Sq Ft</span>
                 </div>
               </div>
+
 
               <div className="mt-4 flex justify-between items-center">
                 <div>
@@ -538,7 +599,7 @@ export default function Home() {
                 className="w-full h-[200px] object-cover"
               />
 
-              <div className="absolute top-3 left-3 flex gap-2">
+              <div className="absolute top-3 left-3 flex gap-42">
                 <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
                   FEATURED
                 </span>
@@ -561,19 +622,24 @@ export default function Home() {
               <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
 
               <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex items-center gap-1">
-                  <Bed fontSize="small"/> 4 Beds
+                <div className="flex flex-col items-center">
+                  <Bed fontSize="small" />
+                  <span>4 Beds</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Bathtub fontSize="small" /> 5 Baths
+                <div className="flex flex-col items-center">
+                  <Bathtub fontSize="small" />
+                  <span>5 Baths</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Garage fontSize="small" /> 1 Garage
+                <div className="flex flex-col items-center">
+                  <Garage fontSize="small" />
+                  <span>1 Garage</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <SquareFoot fontSize="small" /> 1200 Sq Ft
+                <div className="flex flex-col items-center">
+                  <SquareFoot fontSize="small" />
+                  <span>1200 Sq Ft</span>
                 </div>
               </div>
+
 
               <div className="mt-4 flex justify-between items-center">
                 <div>
