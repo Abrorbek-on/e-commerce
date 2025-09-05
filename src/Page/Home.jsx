@@ -104,7 +104,7 @@ export default function Home() {
         </Box>
       </Box>
 
-      <section className="bg-[#595959]">
+      <section className="bg-[#595959] h-[480px]"><br />
         <div className="max-w-[1500px] m-auto text-center">
           <p className="text-[30px]">Recommended</p>
           <h1 className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>
@@ -118,7 +118,7 @@ export default function Home() {
                 className="w-full h-[200px] object-cover"
               />
 
-              <div className="absolute top-3 left-3 flex gap-442">
+              <div className="absolute top-3 left-3 flex gap-42">
                 <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
                   FEATURED
                 </span>
@@ -216,7 +216,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" /> 1200 Sq Ft
                 </div>
               </div>
-              
+
 
               <div className="mt-4 flex justify-between items-center">
                 <div>
@@ -302,32 +302,32 @@ export default function Home() {
 
       <section className="max-w-[1500px] m-auto">
         <div className="text-center mt-[20px]">
-          <p className="text-[30px]">Why Choose Us?</p>
-          <h1 className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>
+          <p className="text-[30px] mt-[100px]">Why Choose Us?</p>
+          <h1 className="text-gray-500 mb-[60px]">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>
         </div>
         <div className="flex justify-between">
           <div>
-            <img src="assets/Vector.png" alt="" />
-            <p><strong>
-              Trusted By Thousands</strong> <br /> <span>With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
+            <img className="ml-[70px]" src="assets/Vector.png" alt="" /><br />
+            <p className="text-center"><strong className="text-[#0d263b]">
+              Trusted By Thousands</strong> <br /> <span className="text-[#838485]">With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
           </div>
 
           <div>
-            <img src="assets/Vector.png" alt="" />
-            <p><strong>
-              Trusted By Thousands</strong> <br /> <span>With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
+            <img className="ml-[70px]" src="assets/Vector.png" alt="" /><br />
+            <p className="text-center"><strong className="text-[#0d263b]">
+              Trusted By Thousands</strong> <br /> <span className="text-[#838485]">With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
           </div>
 
           <div>
-            <img src="assets/Vector.png" alt="" />
-            <p><strong>
-              Trusted By Thousands</strong> <br /> <span>With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
+            <img className="ml-[70px]" src="assets/Vector.png" alt="" /><br />
+            <p className="text-center"><strong className="text-[#0d263b]">
+              Trusted By Thousands</strong> <br /> <span className="text-[#838485]">With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
           </div>
 
           <div>
-            <img src="assets/Vector.png" alt="" />
-            <p><strong>
-              Trusted By Thousands</strong> <br /> <span>With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
+            <img className="ml-[70px]" src="assets/Vector.png" alt="" /><br />
+            <p className="text-center"><strong className="text-[#0d263b]">
+              Trusted By Thousands</strong> <br /> <span className="text-[#838485]">With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
           </div>
         </div>
 
@@ -335,7 +335,7 @@ export default function Home() {
 
 
       <section className="max-w-[1500px] m-auto">
-        <div className="text-center mt-[20px]">
+        <div className="text-center mt-[50px]">
           <strong className="text-[30px]">Category</strong>
           <p className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</p>
         </div>
@@ -362,7 +362,7 @@ export default function Home() {
           position: "relative",
           width: "100%",
           height: "600px",
-          backgroundImage: "url(assets/unsplash_2gDwlIim3Uw.png)",
+          backgroundImage: "url(assets/unsplash_g39p1kDjvSY.png)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           color: "white",
@@ -400,9 +400,9 @@ export default function Home() {
 
 
 
-      <section>
+      <section className="bg-[#595959] h-[300px]"><br />
         <div className="max-w-[1500px] m-auto text-center">
-          <p className="text-[30px]">Recent Properties for Rent</p>
+          <p className="text-[30px] mt-[20px]">Recent Properties for Rent</p>
           <h1 className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>
         </div>
         <div className="max-w-[1200px] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px]">
@@ -468,7 +468,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="w-[350px] overflow-hidden shadow-lg bg-white">
+          <div className="w-[350px] overflow-hidden shadow-lg bg-white ">
             <div className="relative">
               <img
                 src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
@@ -556,13 +556,13 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="p-4">
+            <div className="p-4 ">
               <h2 className="text-lg font-bold">New Apartment Nice View</h2>
               <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
 
               <div className="flex justify-between text-gray-600 text-sm mt-3">
                 <div className="flex items-center gap-1">
-                  <Bed fontSize="small" /> 4 Beds
+                  <Bed fontSize="small"/> 4 Beds
                 </div>
                 <div className="flex items-center gap-1">
                   <Bathtub fontSize="small" /> 5 Baths
@@ -596,7 +596,7 @@ export default function Home() {
       </section>
 
 
-      <section className="max-w-[1500px] m-auto">
+      <section className="max-w-[1500px] m-auto mt-[300px]">
         <div className="text-center mt-[20px]">
           <strong className="text-[30px]">Testimonials</strong>
           <h1 className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>
