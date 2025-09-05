@@ -162,7 +162,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div><hr />
+              </div><hr className="text-gray-400 mt-2"/>
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -230,7 +230,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div>
+              </div><hr className="text-gray-400 mt-2"/>
 
 
 
@@ -298,7 +298,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div>
+              </div><hr className="text-gray-400 mt-2"/>
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -510,7 +510,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div>
+              </div><hr className="text-gray-400 mt-2"/>
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -577,7 +577,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div>
+              </div><hr className="text-gray-400 mt-2"/>
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -644,7 +644,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div>
+              </div><hr className="text-gray-400 mt-2"/>
 
 
               <div className="mt-4 flex justify-between items-center">
