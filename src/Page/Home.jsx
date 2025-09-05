@@ -1,12 +1,13 @@
 import React from "react";
 import Navbar from "../Components/Navbar";
-import { Box, Typography, Button, Grid, Avatar } from "@mui/material";
+import { Box, Typography, Button, Grid, Avatar, Checkbox } from "@mui/material";
 import HotelIcon from "@mui/icons-material/Hotel";
 import BathtubIcon from "@mui/icons-material/Bathtub";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import { IconButton } from "@mui/material";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import {
   FavoriteBorder, ArrowOutward, Bed, Bathtub, Garage, SquareFoot, LocationOn,
   Phone,
@@ -17,7 +18,11 @@ import {
   LinkedIn,
   KeyboardArrowUp,
   Room,
+  Favorite,
 } from "@mui/icons-material";
+import { BookmarkIcon } from "lucide-react";
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
 export default function Home() {
@@ -157,7 +162,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div>
+              </div><hr />
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -169,9 +174,10 @@ export default function Home() {
                   <IconButton size="small">
                     <ArrowOutward fontSize="small" />
                   </IconButton>
-                  <IconButton size="small">
-                    <FavoriteBorder fontSize="small" />
-                  </IconButton>
+                  <div>
+                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                    
+                  </div>
                 </div>
               </div>
             </div>
@@ -237,9 +243,9 @@ export default function Home() {
                   <IconButton size="small">
                     <ArrowOutward fontSize="small" />
                   </IconButton>
-                  <IconButton size="small">
-                    <FavoriteBorder fontSize="small" />
-                  </IconButton>
+                  <div>
+                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -304,9 +310,9 @@ export default function Home() {
                   <IconButton size="small">
                     <ArrowOutward fontSize="small" />
                   </IconButton>
-                  <IconButton size="small">
-                    <FavoriteBorder fontSize="small" />
-                  </IconButton>
+                  <div>
+                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -516,9 +522,9 @@ export default function Home() {
                   <IconButton size="small">
                     <ArrowOutward fontSize="small" />
                   </IconButton>
-                  <IconButton size="small">
-                    <FavoriteBorder fontSize="small" />
-                  </IconButton>
+                  <div>
+                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -583,9 +589,9 @@ export default function Home() {
                   <IconButton size="small">
                     <ArrowOutward fontSize="small" />
                   </IconButton>
-                  <IconButton size="small">
-                    <FavoriteBorder fontSize="small" />
-                  </IconButton>
+                  <div>
+                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -650,9 +656,9 @@ export default function Home() {
                   <IconButton size="small">
                     <ArrowOutward fontSize="small" />
                   </IconButton>
-                  <IconButton size="small">
-                    <FavoriteBorder fontSize="small" />
-                  </IconButton>
+                  <div>
+                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                  </div>
                 </div>
               </div>
             </div>
