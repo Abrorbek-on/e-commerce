@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import PaidIcon from "@mui/icons-material/Paid";
 import TuneIcon from "@mui/icons-material/Tune";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Link } from 'react-router-dom';
 
 
 function Navbar() {
@@ -17,14 +18,15 @@ function Navbar() {
                         <img src="assets/logo.png" alt="Houzing img" />
                     </div>
                     <div>
-                        <ul className='flex text-white gap-[30px]'>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Properties</a></li>
-                            <li><a href="#">Contacts</a></li>
+                        <ul className="flex text-white gap-[30px]">
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/properties">Properties</Link></li>
+                            <li><Link to="/contact">Contact</Link></li>
                         </ul>
                     </div>
                     <div>
-                        <PermIdentityIcon className='text-white' />
+
+                        <Link to="/register"> <PermIdentityIcon className='text-white' /></Link>
                     </div>
                 </nav>
 

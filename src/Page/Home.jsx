@@ -21,6 +21,7 @@ import {
   Favorite,
 } from "@mui/icons-material";
 import { BookmarkIcon } from "lucide-react";
+import Footer from "../Components/Footer";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -162,7 +163,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div><hr className="text-gray-400 mt-2"/>
+              </div><hr className="text-gray-400 mt-2" />
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -176,7 +177,7 @@ export default function Home() {
                   </IconButton>
                   <div>
                     <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-                    
+
                   </div>
                 </div>
               </div>
@@ -230,7 +231,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div><hr className="text-gray-400 mt-2"/>
+              </div><hr className="text-gray-400 mt-2" />
 
 
 
@@ -298,7 +299,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div><hr className="text-gray-400 mt-2"/>
+              </div><hr className="text-gray-400 mt-2" />
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -510,7 +511,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div><hr className="text-gray-400 mt-2"/>
+              </div><hr className="text-gray-400 mt-2" />
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -577,7 +578,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div><hr className="text-gray-400 mt-2"/>
+              </div><hr className="text-gray-400 mt-2" />
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -644,7 +645,7 @@ export default function Home() {
                   <SquareFoot fontSize="small" />
                   <span>1200 Sq Ft</span>
                 </div>
-              </div><hr className="text-gray-400 mt-2"/>
+              </div><hr className="text-gray-400 mt-2" />
 
 
               <div className="mt-4 flex justify-between items-center">
@@ -729,78 +730,7 @@ export default function Home() {
       </section>
 
 
-      <footer className="bg-[#0f2c46] text-white pt-10 mt-[120px]">
-        <div className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-6">
-          <div>
-            <h3 className="font-semibold mb-4">Contact Us</h3>
-            <div className="flex items-start mb-3">
-              <LocationOn className="text-blue-400 mr-2" />
-              <p className="text-sm">
-                329 Queensberry Street, North Melbourne VIC 3051, Australia.
-              </p>
-            </div>
-            <div className="flex items-center mb-3">
-              <Phone className="text-blue-400 mr-2" />
-              <p className="text-sm">123 456 7890</p>
-            </div>
-            <div className="flex items-center mb-3">
-              <Email className="text-blue-400 mr-2" />
-              <p className="text-sm">support@houzing.com</p>
-            </div>
-
-            <div className="flex space-x-4 mt-4">
-              <Facebook className="cursor-pointer hover:text-blue-400" />
-              <Twitter className="cursor-pointer hover:text-blue-400" />
-              <Instagram className="cursor-pointer hover:text-blue-400" />
-              <LinkedIn className="cursor-pointer hover:text-blue-400" />
-            </div>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Discover</h3>
-            <ul className="space-y-2 text-sm">
-              <li>Chicago</li>
-              <li>Los Angeles</li>
-              <li>Miami</li>
-              <li>New York</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Lists by Category</h3>
-            <ul className="space-y-2 text-sm">
-              <li>Apartments</li>
-              <li>Condos</li>
-              <li>Houses</li>
-              <li>Offices</li>
-              <li>Retail</li>
-              <li>Villas</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Lists by Category</h3>
-            <ul className="space-y-2 text-sm">
-              <li>About Us</li>
-              <li>Terms & Conditions</li>
-              <li>Support Center</li>
-              <li>Contact Us</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-700 mt-10 py-4 px-6 flex justify-between items-center max-w-[1500px] m-auto">
-          <div className="flex items-center space-x-2">
-            <img src="assets/logo.png" alt="" />
-          </div>
-          <p className="text-sm text-gray-400">
-            Copyright © 2021 CreativeLayers. All Right Reserved.
-          </p>
-          <button className="bg-blue-600 p-2 rounded">
-            <KeyboardArrowUp className="text-white" />
-          </button>
-        </div>
-      </footer>
+      <Footer/>
 
     </>
   );
