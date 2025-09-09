@@ -7,6 +7,7 @@ import Login from "./Page/Login";
 import AddPropertyForm from "./Page/Address";
 import My_properties from "./Page/My_properties";
 import Product_view from "./Page/product_view";
+import Contact from "./Page/Contact";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/addpropertyform" element={<AddPropertyForm />} />
         <Route path="/my_properties" element={<My_properties />} />
         <Route path="/product_view" element={<Product_view />} />
+        <Route path="/contact" element={<Contact />} />
         
       </Routes>
     </BrowserRouter>
@@ -28,3 +30,4 @@ function App() {
 }
 
 export default App;
+

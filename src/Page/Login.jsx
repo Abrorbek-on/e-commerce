@@ -91,9 +91,11 @@ export default function LoginForm() {
                             type="submit"
                             className="w-full bg-blue-600 text-white py-2 rounded mt-2 hover:bg-blue-700 transition"
                         >
-                            Login
+                eeeee
                         </button>
                     </form>
+                    <Link to="/register" className='text-blue-500 flex justify-center mt-[10px]'>Register</Link>
+
                 </div>
             </div>
 
