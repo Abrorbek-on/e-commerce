@@ -40,8 +40,8 @@ export default function My_properties() {
 
     return (
         <>
-            <header className="max-w-[1920px] mx-auto bg-[#0d263b] h-[80px]">
-                <nav className="max-w-[1500px] m-auto flex justify-between items-center h-full">
+            <header className='max-w-[1920px] mx-auto bg-[#0d263b] h-[80px]'>
+                <nav className='max-w-[1500px] m-auto flex justify-between items-center h-full'>
                     <div>
                         <img src="assets/logo.png" alt="Houzing img" />
                     </div>
@@ -52,8 +52,11 @@ export default function My_properties() {
                             <li><Link to="/contact">Contact</Link></li>
                         </ul>
                     </div>
+                    <div>
+                    </div>
                 </nav>
             </header>
+
 
 
             <section className="max-w-[1500px] m-auto p-6">

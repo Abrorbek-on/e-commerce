@@ -458,7 +458,7 @@ export default function Home() {
 
 
 
-      <section className="bg-[#595959] h-[300px]"><br />
+      <section className="h-[300px]"><br />
         <div className="max-w-[1500px] m-auto text-center">
           <p className="text-[30px] mt-[20px]">Recent Properties for Rent</p>
           <h1 className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>

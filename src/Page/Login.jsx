@@ -34,7 +34,7 @@ export default function LoginForm() {
                         <ul className="flex text-white gap-[30px]">
                             <li><Link to="/">Home</Link></li>
                             <li><Link to="/properties">Properties</Link></li>
-                            <li><Link to="/favorite">Favorite</Link></li>
+                            <li><Link to="/contact">Contact</Link></li>
                         </ul>
                     </div>
                     <div>
@@ -91,7 +91,7 @@ export default function LoginForm() {
                             type="submit"
                             className="w-full bg-blue-600 text-white py-2 rounded mt-2 hover:bg-blue-700 transition"
                         >
-                eeeee
+                            Login
                         </button>
                     </form>
                     <Link to="/register" className='text-blue-500 flex justify-center mt-[10px]'>Register</Link>

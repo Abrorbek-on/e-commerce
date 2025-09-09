@@ -6,8 +6,9 @@ import Register from "./Page/Register";
 import Login from "./Page/Login";
 import AddPropertyForm from "./Page/Address";
 import My_properties from "./Page/My_properties";
-import Product_view from "./Page/product_view";
+import Product_view from "./Page/Product_view";
 import Contact from "./Page/Contact";
+import My_profile from "./Page/My_profile";
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
         <Route path="/my_properties" element={<My_properties />} />
         <Route path="/product_view" element={<Product_view />} />
         <Route path="/contact" element={<Contact />} />
-        
+        <Route path="/my_profile" element={<My_profile />} />
       </Routes>
     </BrowserRouter>
   );

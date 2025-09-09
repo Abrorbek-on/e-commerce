@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import { Button } from '@mui/material';
+import { Button, Menu, MenuItem, IconButton } from '@mui/material';
 import HouseIcon from "@mui/icons-material/House";
 import SearchIcon from "@mui/icons-material/Search";
 import PaidIcon from "@mui/icons-material/Paid";
@@ -8,8 +8,17 @@ import TuneIcon from "@mui/icons-material/Tune";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Link } from 'react-router-dom';
 
-
 function Navbar() {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <>
             <header className='max-w-[1920px] mx-auto bg-[#0d263b] h-[80px]'>
@@ -25,8 +34,36 @@ function Navbar() {
                         </ul>
                     </div>
                     <div>
+                        <IconButton onClick={handleClick}>
+                            <PermIdentityIcon className="text-white" />
+                        </IconButton>
 
-                        <Link to="/register"> <PermIdentityIcon className='text-white' /></Link>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            PaperProps={{
+                                style: {
+                                    marginTop: "10px"
+                                }
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_profile">My profile</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_properties">My Properties</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/favorite">Favourites</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/product_view">Product view</Link>
+                            </MenuItem>
+                             <MenuItem onClick={handleClose}>
+                                <Link to="/addpropertyform">Add Property Form</Link>
+                            </MenuItem>
+                        </Menu>
                     </div>
                 </nav>
 
@@ -73,12 +110,9 @@ function Navbar() {
                         </Button>
                     </div>
                 </section>
-
             </header>
         </>
-
     )
 }
 
-export default Navbar
-
+export default Navbar;

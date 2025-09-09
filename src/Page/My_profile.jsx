@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../Components/Footer'
 
-function Register() {
+function My_profile() {
     const [formData, setFormData] = useState({
         login: "",
         firstName: "",
@@ -44,7 +44,7 @@ function Register() {
 
             <div className="flex justify-center mt-[100px]">
                 <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
-                    <h2 className="text-lg font-semibold mb-4">Registration</h2>
+                    <h2 className="text-lg font-semibold mb-4">Profile</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
 
                         <input
@@ -107,4 +107,4 @@ function Register() {
     )
 }
 
-export default Register
+export default My_profile
