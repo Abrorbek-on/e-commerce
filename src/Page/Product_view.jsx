@@ -603,7 +603,7 @@ export default function PropertyPage() {
                                                 </IconButton></Link>
                                             <div>
                                                 <Checkbox
-                                                    color="error"
+                                                    color="error"  
                                                     icon={<FavoriteBorder />}
                                                     checkedIcon={<Favorite />}
                                                 />
