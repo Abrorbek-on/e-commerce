@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Avatar } from "@mui/material";
+import { Star } from "@mui/icons-material";
+import { IconButton, Checkbox } from "@mui/material";
+import ArrowOutward from "@mui/icons-material/ArrowOutward";
+import Favorite from "@mui/icons-material/Favorite";
+import Garage from "@mui/icons-material/DirectionsCar";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { Menu, MenuItem } from "@mui/material";
 import {
     Bed,
     Bathtub,
@@ -9,55 +16,91 @@ import {
     CalendarToday,
     Download,
     CheckCircle,
-    Star,
+    Share,
+    FavoriteBorder,
 } from "@mui/icons-material";
 import Footer from "../Components/Footer";
 
 export default function PropertyPage() {
-    const similarListings = [
-        {
-            id: 1,
-            img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d",
-            title: "New Apartment Nice View",
-            address: "Quincy St, Brooklyn, NY, USA",
-            price: "$2,800/mo",
-        },
-        {
-            id: 2,
-            img: "https://images.unsplash.com/photo-1600585154154-0c3d2f1b99d3",
-            title: "Modern House with Garden",
-            address: "Palm St, Miami, FL, USA",
-            price: "$5,500/mo",
-        },
-        {
-            id: 3,
-            img: "https://images.unsplash.com/photo-1600585154575-3c94c4d4db01",
-            title: "Family House with Pool",
-            address: "Sunset Blvd, LA, CA, USA",
-            price: "$7,200/mo",
-        },
+    const features = [
+        "Air Conditioning",
+        "Lawn",
+        "Refrigerator",
+        "Washer",
+        "Barbeque",
+        "Laundry",
+        "Sauna",
+        "WiFi",
+        "Dryer",
+        "Microwave",
+        "Swimming Pool",
+        "Window Coverings",
+        "Gym",
+        "Outdoor Shower",
+        "TV Cable",
+        "Dining room",
     ];
 
     const reviews = [
         {
             id: 1,
-            user: "Courtney Henry",
-            img: "https://randomuser.me/api/portraits/women/44.jpg",
+            name: "Jane Cooper",
+            date: "April 6, 2021 at 3:21 AM",
             rating: 5,
-            date: "March 12, 2024",
-            comment:
-                "This apartment was amazing! The view is spectacular, and the location is perfect. Totally worth it.",
+            text: "Every single thing we tried with John was delicious! Found some awesome places we would definitely go back to on our trip. John was also super friendly and passionate about Beşiktaş and Istanbul.",
         },
         {
             id: 2,
-            user: "Jane Cooper",
-            img: "https://randomuser.me/api/portraits/women/68.jpg",
-            rating: 4,
-            date: "April 5, 2024",
-            comment:
-                "Good overall, but the furniture could be better. Agent was very helpful though!",
+            name: "Jane Cooper",
+            date: "April 6, 2021 at 3:21 AM",
+            rating: 5,
+            text: "Every single thing we tried with John was delicious! Found some awesome places we would definitely go back to on our trip. John was also super friendly and passionate about Beşiktaş and Istanbul.",
         },
     ];
+    const ratings = [
+        { name: "Cleanliness", value: 4.7 },
+        { name: "Communication", value: 4.9 },
+        { name: "Check-in", value: 4.9 },
+        { name: "Accuracy", value: 4.7 },
+        { name: "Location", value: 4.9 },
+        { name: "Value", value: 4.9 },
+    ];
+
+    const properties = [
+        {
+            id: 1,
+            title: "New Apartment Nice View",
+            address: "Quincy St, Brooklyn, NY, USA",
+            img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1350&q=80",
+            oldPrice: "$2,800/mo",
+            newPrice: "$7,500/mo",
+        },
+        {
+            id: 2,
+            title: "Luxury Villa With Pool",
+            address: "Beverly Hills, CA, USA",
+            img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1350&q=80",
+            oldPrice: "$3,500/mo",
+            newPrice: "$9,200/mo",
+        },
+        {
+            id: 3,
+            title: "Cozy Family House",
+            address: "Austin, TX, USA",
+            img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1350&q=80",
+            oldPrice: "$1,800/mo",
+            newPrice: "$4,500/mo",
+        },
+    ]
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
     return (
         <>
@@ -80,314 +123,501 @@ export default function PropertyPage() {
                         </ul>
                     </div>
                     <div>
-                        <Link to="/login">
-                            <Button
-                                className="!w-[150px] !text-white !border"
-                                variant="outlined"
-                            >
-                                Login
-                            </Button>
-                        </Link>
+                        <IconButton onClick={handleClick}>
+                            <PermIdentityIcon className="text-white" />
+                        </IconButton>
+
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            PaperProps={{
+                                style: {
+                                    marginTop: "10px"
+                                }
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_profile">My profile</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_properties">My Properties</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/favorite">Favourites</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/product_view">Product view</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/addpropertyform">Add Property Form</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/chiqish" className='text-red-500'>Chiqish</Link>
+                            </MenuItem>
+                        </Menu>
+
                     </div>
                 </nav>
             </header>
 
-            <div className="min-h-screen bg-gray-100 flex justify-center p-6">
+            <div className="min-h-screen flex justify-center p-6">
                 <div className="max-w-[1500px] w-full bg-white rounded-2xl shadow-lg p-6">
-                    <div className="grid grid-cols-3 gap-4">
-                        <div className="col-span-2">
-                            <img
-                                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d"
-                                alt="Main"
-                                className="w-full h-[400px] object-cover rounded-xl"
-                            />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <img
-                                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d"
-                                alt="1"
-                                className="w-full h-[190px] object-cover rounded-xl"
-                            />
-                            <img
-                                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d"
-                                alt="2"
-                                className="w-full h-[190px] object-cover rounded-xl"
-                            />
-                            <img
-                                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d"
-                                alt="3"
-                                className="w-full h-[190px] object-cover rounded-xl"
-                            />
-                            <div className="w-full h-[190px] bg-black bg-opacity-50 flex items-center justify-center text-white text-xl font-semibold rounded-xl">
-                                +15
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="mt-6 flex flex-col md:flex-row justify-between items-start md:items-center">
-                        <div>
-                            <h1 className="text-2xl font-bold">
-                                Luxury Family Loft by Victoria Park
-                            </h1>
-                            <p className="text-gray-500">Quincy St, Brooklyn, NY, USA</p>
-                        </div>
-                        <div className="text-right mt-4 md:mt-0">
-                            <p className="line-through text-gray-400">$2,800/mo</p>
-                            <p className="text-2xl font-bold text-blue-600">$7,500/mo</p>
-                            <p className="text-sm text-gray-500">Est. Mortgage</p>
-                        </div>
-                    </div>
-
-                    <div className="flex gap-6 text-gray-600 mt-4 text-sm flex-wrap">
-                        <span className="flex items-center gap-1">
-                            <Bed fontSize="small" /> 4 Beds
-                        </span>
-                        <span className="flex items-center gap-1">
-                            <Bathtub fontSize="small" /> 5 Baths
-                        </span>
-                        <span className="flex items-center gap-1">
-                            <DirectionsCar fontSize="small" /> 1 Garage
-                        </span>
-                        <span className="flex items-center gap-1">
-                            <SquareFoot fontSize="small" /> 1200 Sq Ft
-                        </span>
-                        <span className="flex items-center gap-1">
-                            <CalendarToday fontSize="small" /> Year Built: 1800
-                        </span>
-                    </div>
-
-                    <div className="mt-6">
-                        <h2 className="font-semibold text-lg">Description</h2>
-                        <p className="text-gray-600 mt-2 text-sm leading-relaxed">
-                            Occupying over 8,000 square feet, perched over 1,100 feet in the
-                            air with breathtaking panoramic 360-degree views of New York City
-                            and the tri-state area, this loft has been completely reimagined
-                            by one of the most sought-after design houses in London...
-                        </p>
-                        <button className="text-blue-600 mt-2 text-sm font-medium">
-                            Show more
-                        </button>
-                    </div>
-
-                    <div className="mt-10">
-                        <h2 className="font-semibold text-lg mb-3">Documents</h2>
-                        <div className="flex gap-8 text-sm items-center flex-wrap">
-                            {["doc1.pdf", "doc2.pdf", "doc3.pdf"].map((doc, i) => (
-                                <div key={i} className="flex items-center gap-2">
-                                    <Download fontSize="small" /> <span>{doc}</span>
-                                    <a href="#" className="text-blue-600 font-medium">
-                                        DOWNLOAD
-                                    </a>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-2">
+                            <div className="grid grid-cols-3 gap-4">
+                                <div className="col-span-2">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1600585154526-990dced4db0d"
+                                        alt="Main"
+                                        className="w-full h-[420px] object-cover rounded-xl"
+                                    />
                                 </div>
-                            ))}
-                        </div>
-                    </div>
 
-                    <div className="mt-10">
-                        <h2 className="font-semibold text-lg mb-3">Location</h2>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-700">
-                            <p>
-                                <span className="font-semibold">Address:</span> 329 Queensberry
-                                Street
-                            </p>
-                            <p>
-                                <span className="font-semibold">City:</span> Jersey City
-                            </p>
-                            <p>
-                                <span className="font-semibold">Area:</span> Greenville
-                            </p>
-                            <p>
-                                <span className="font-semibold">State/County:</span> Washington
-                            </p>
-                            <p>
-                                <span className="font-semibold">Zip:</span> 365448
-                            </p>
-                            <p>
-                                <span className="font-semibold">Country:</span> United States
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-700">
-                        <p>
-                            <span className="font-semibold">Property ID:</span> 1234
-                        </p>
-                        <p>
-                            <span className="font-semibold">Bathrooms:</span> 5
-                        </p>
-                        <p>
-                            <span className="font-semibold">Property Type:</span> Apartment
-                        </p>
-                        <p>
-                            <span className="font-semibold">Property Status:</span> For Rent
-                        </p>
-                        <p>
-                            <span className="font-semibold">Property Size:</span> 1200 Sq Ft
-                        </p>
-                        <p>
-                            <span className="font-semibold">Garage:</span> 1
-                        </p>
-                        <p>
-                            <span className="font-semibold">Year Built:</span> 2020
-                        </p>
-                        <p>
-                            <span className="font-semibold">Rooms:</span> 6
-                        </p>
-                    </div>
-
-                    <div className="mt-10">
-                        <h2 className="font-semibold text-lg mb-3">Features</h2>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-gray-700">
-                            {[
-                                "Air Conditioning",
-                                "Lawn",
-                                "Swimming Pool",
-                                "TV Cable",
-                                "Washer",
-                                "Dryer",
-                                "Outdoor Shower",
-                                "Gym",
-                            ].map((feature, i) => (
-                                <span key={i} className="flex items-center gap-1">
-                                    <CheckCircle fontSize="small" color="success" /> {feature}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="mt-10">
-                        <h2 className="font-semibold text-lg mb-3">Schedule a Tour</h2>
-                        <form className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                            <input type="date" className="border rounded-lg px-3 py-2" />
-                            <input type="time" className="border rounded-lg px-3 py-2" />
-                            <input
-                                type="text"
-                                placeholder="Name"
-                                className="border rounded-lg px-3 py-2"
-                            />
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                className="border rounded-lg px-3 py-2"
-                            />
-                            <textarea
-                                rows="3"
-                                placeholder="Enter Your Message"
-                                className="border rounded-lg px-3 py-2 md:col-span-2"
-                            ></textarea>
-                            <Button
-                                variant="contained"
-                                className="!bg-blue-600 !text-white md:col-span-2"
-                            >
-                                Submit a Tour Request
-                            </Button>
-                        </form>
-                    </div>
-
-                    <div className="mt-10">
-                        <h2 className="font-semibold text-lg mb-3">Rating & Reviews</h2>
-                        <div className="flex gap-10 text-sm">
-                            <div>
-                                <p className="font-bold text-2xl">4.7</p>
-                                <p className="text-gray-500">Average Rating</p>
-                            </div>
-                            <div className="flex-1">
-                                {[5, 4, 3, 2, 1].map((star, i) => (
-                                    <div key={i} className="flex items-center gap-2">
-                                        <span>
-                                            {star} <Star fontSize="small" />
-                                        </span>
-                                        <div className="bg-gray-200 h-2 rounded flex-1">
-                                            <div className="bg-blue-600 h-2 rounded w-[70%]"></div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1600585154526-990dced4db0d"
+                                        alt="1"
+                                        className="w-full h-[200px] object-cover rounded-xl"
+                                    />
+                                    <img
+                                        src="https://images.unsplash.com/photo-1600585154526-990dced4db0d"
+                                        alt="2"
+                                        className="w-full h-[200px] object-cover rounded-xl"
+                                    />
+                                    <img
+                                        src="https://images.unsplash.com/photo-1600585154526-990dced4db0d"
+                                        alt="3"
+                                        className="w-full h-[200px] object-cover rounded-xl"
+                                    />
+                                    <div className="relative w-full h-[200px] rounded-xl overflow-hidden">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1600585154526-990dced4db0d"
+                                            alt="more"
+                                            className="w-full h-full object-cover brightness-50"
+                                        />
+                                        <div className="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold">
+                                            +15
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-6 flex flex-col md:flex-row justify-between items-start md:items-center">
+                                <div>
+                                    <h1 className="text-2xl font-bold">
+                                        Luxury Family Loft by Victoria Park
+                                    </h1>
+                                    <p className="text-gray-500 mt-1">
+                                        Quincy St, Brooklyn, NY, USA
+                                    </p>
+                                </div>
+                                <div className="text-right mt-4 md:mt-0">
+                                    <p className="line-through text-gray-400">$2,800/mo</p>
+                                    <p className="text-2xl font-bold text-blue-600">$7,500/mo</p>
+                                    <p className="text-sm text-gray-500">Est. Mortgage</p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-6 text-gray-600 mt-4 text-sm flex-wrap">
+                                <span className="flex items-center gap-1">
+                                    <Bed fontSize="small" /> 4 Beds
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <Bathtub fontSize="small" /> 5 Baths
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <DirectionsCar fontSize="small" /> 1 Garage
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <SquareFoot fontSize="small" /> 1200 Sq Ft
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <CalendarToday fontSize="small" /> Year Built: 1800
+                                </span>
+
+                                <div className="ml-auto flex items-center gap-3">
+                                    <button className="flex items-center gap-2 px-3 py-2 rounded-full border text-sm">
+                                        <Share fontSize="small" /> Share
+                                    </button>
+                                    <button className="flex items-center gap-2 px-3 py-2 rounded-full border text-sm">
+                                        <FavoriteBorder fontSize="small" /> Save
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="mt-6">
+                                <h2 className="font-semibold text-lg">Description</h2>
+                                <p className="text-gray-600 mt-2 text-sm leading-relaxed">
+                                    Occupying over 8,000 square feet, perched over 1,100 feet in
+                                    the air with breathtaking panoramic 360-degree views of New
+                                    York City and the tri-state area, this loft has been
+                                    completely reimagined by one of the most sought-after design
+                                    houses in London...
+                                </p>
+                                <button className="text-blue-600 mt-2 text-sm font-medium">
+                                    Show more
+                                </button>
+                            </div>
+
+                            <div className="mt-8 border-t pt-6">
+                                <h3 className="font-medium mb-4">Documents</h3>
+                                <div className="flex flex-wrap gap-6 items-center">
+                                    {["test_property.pdf", "floor_plan.pdf", "inspection.pdf"].map(
+                                        (f, idx) => (
+                                            <div
+                                                key={idx}
+                                                className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-lg shadow-sm"
+                                            >
+                                                <Download />
+                                                <div className="text-sm">
+                                                    <div className="font-medium text-gray-800">{f}</div>
+                                                    <a
+                                                        href="#"
+                                                        className="text-blue-600 text-xs hover:underline"
+                                                    >
+                                                        DOWNLOAD
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside className="lg:col-span-1">
+                            <div className="sticky top-6 space-y-4">
+                                <div className="border rounded-xl p-4 shadow-sm bg-white">
+                                    <div className="flex items-center gap-4">
+                                        <Avatar
+                                            alt="Agent"
+                                            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2"
+                                        />
+                                        <div>
+                                            <div className="font-medium">Darrel Steward</div>
+                                            <div className="text-xs text-gray-500">
+                                                (123)456-7890
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <form className="mt-4 space-y-3">
+                                        <input
+                                            placeholder="Name"
+                                            className="w-full border rounded px-3 py-2 text-sm"
+                                        />
+                                        <input
+                                            placeholder="Phone"
+                                            className="w-full border rounded px-3 py-2 text-sm"
+                                        />
+                                        <input
+                                            placeholder="Email"
+                                            className="w-full border rounded px-3 py-2 text-sm"
+                                        />
+                                        <textarea
+                                            placeholder="Message"
+                                            className="w-full border rounded px-3 py-2 text-sm h-20"
+                                        />
+                                        <label className="flex items-center gap-2 text-xs text-gray-600">
+                                            <input type="checkbox" />
+                                            By submitting this form I agree to Terms of Use
+                                        </label>
+                                        <button
+                                            type="button"
+                                            className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white rounded px-4 py-2"
+                                        >
+                                            Send request
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div className="border rounded-xl p-4 shadow-sm bg-white text-sm text-gray-600">
+                                    <div className="mb-3">More info</div>
+                                    <div className="text-xs">Listed: 12 Apr 2025</div>
+                                    <div className="text-xs mt-2">Property ID: 432PA-82</div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+
+            <div className="max-w-[1500px] mx-auto p-6 bg-white rounded-xl shadow-sm mt-10">
+                <h2 className="text-xl font-semibold mb-4">Location</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-y-2 text-sm text-gray-700 mb-4">
+                    <p>
+                        <strong>Address:</strong> 329 Queensberry Street
+                    </p>
+                    <p>
+                        <strong>City:</strong> Jersey City
+                    </p>
+                    <p>
+                        <strong>Area:</strong> Greenville
+                    </p>
+                    <p>
+                        <strong>State/County:</strong> Washington
+                    </p>
+                    <p>
+                        <strong>Zip:</strong> 365448
+                    </p>
+                    <p>
+                        <strong>Country:</strong> United States
+                    </p>
+                </div>
+
+                <div className="w-full h-[300px] mb-8">
+                    <iframe
+                        title="map"
+                        src="https://maps.google.com/maps?q=washington&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        className="w-full h-full rounded-lg"
+                    ></iframe>
+                </div>
+
+                <h2 className="text-xl font-semibold mb-4">Property Details</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-y-3 text-sm text-gray-700 mb-8">
+                    <p>
+                        <strong>Property ID:</strong> H227
+                    </p>
+                    <p>
+                        <strong>Bedrooms:</strong> 8
+                    </p>
+                    <p>
+                        <strong>Property Type:</strong> Apartment
+                    </p>
+                    <p>
+                        <strong>Price:</strong> $130,000
+                    </p>
+                    <p>
+                        <strong>Bathrooms:</strong> 6
+                    </p>
+                    <p>
+                        <strong>Property Status:</strong> For Sale
+                    </p>
+                    <p>
+                        <strong>Property Size:</strong> 1560 Sq Ft
+                    </p>
+                    <p>
+                        <strong>Garage:</strong> 4
+                    </p>
+                    <p>
+                        <strong>Year Built:</strong> 2021-01-09
+                    </p>
+                    <p>
+                        <strong>Garage Size:</strong> 200 Sq Ft
+                    </p>
+                </div>
+
+                <h2 className="text-xl font-semibold mb-4">Features</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-gray-700 mb-8">
+                    {features.map((f, i) => (
+                        <div key={i} className="flex items-center gap-2 text-sm">
+                            {f}
+                        </div>
+                    ))}
+                </div>
+
+                <h2 className="text-xl font-semibold mb-4">Schedule A Tour</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                    <div>
+                        <label className="block text-sm text-gray-600 mb-1">Date</label>
+                        <input
+                            type="date"
+                            className="w-full border rounded px-3 py-2 text-sm"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm text-gray-600 mb-1">Time</label>
+                        <select className="w-full border rounded px-3 py-2 text-sm">
+                            <option>10:00 am</option>
+                            <option>12:00 pm</option>
+                            <option>02:00 pm</option>
+                            <option>04:00 pm</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div className="max-w-[1500px] mx-auto bg-white rounded-xl shadow-sm p-6 mt-10">
+                <h2 className="text-xl font-semibold mb-4">4.67 (14 reviews)</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                    {ratings.map((r, i) => (
+                        <div key={i}>
+                            <div className="flex justify-between text-sm text-gray-700">
+                                <span>{r.name}</span>
+                                <span>{r.value}</span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded h-2 mt-1">
+                                <div
+                                    className="bg-blue-500 h-2 rounded"
+                                    style={{ width: `${(r.value / 5) * 100}%` }}
+                                ></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-10">
+                    {reviews.map((rev) => (
+                        <div key={rev.id} className="border rounded-xl p-4 shadow-sm">
+                            <div className="flex items-center gap-3 mb-2">
+                                <Avatar src="https://randomuser.me/api/portraits/women/2.jpg" />
+                                <div>
+                                    <div className="font-medium">{rev.name}</div>
+                                    <div className="text-xs text-gray-500">{rev.date}</div>
+                                </div>
+                            </div>
+                            <div className="flex items-center text-yellow-500 mb-2">
+                                {[...Array(rev.rating)].map((_, i) => (
+                                    <Star key={i} fontSize="small" />
+                                ))}
+                                <span className="text-xs text-gray-500 ml-2">
+                                    ({rev.rating} reviews)
+                                </span>
+                            </div>
+                            <p className="text-gray-600 text-sm">{rev.text}</p>
+                        </div>
+                    ))}
+                </div>
+
+                <h2 className="text-xl font-semibold mb-4">Write a Review</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                    {ratings.map((r, i) => (
+                        <div key={i}>
+                            <div className="flex items-center text-sm text-gray-700">
+                                {r.name}
+                            </div>
+                            <div className="flex text-yellow-500">
+                                {[...Array(5)].map((_, i) => (
+                                    <Star key={i} fontSize="small" />
                                 ))}
                             </div>
                         </div>
+                    ))}
+                </div>
+
+                <form className="space-y-4">
+                    <input
+                        type="text"
+                        placeholder="Name"
+                        className="w-full border rounded px-3 py-2 text-sm"
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        className="w-full border rounded px-3 py-2 text-sm"
+                    />
+                    <textarea
+                        placeholder="Enter Your Message"
+                        className="w-full border rounded px-3 py-2 text-sm h-28"
+                    />
+                    <button
+                        type="button"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+                    >
+                        Send your review
+                    </button>
+                </form>
+            </div>
+
+            <div className="max-w-[1500px] m-auto mt-[50px]">
+
+                <section className="py-10">
+                    <div className="text-center">
+                        <p className="text-[30px]">Recommended</p>
+                        <h1 className="text-gray-500">
+                            Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.
+                        </h1>
                     </div>
 
-                    <div className="mt-10">
-                        {reviews.map((r) => (
-                            <div key={r.id} className="border-b py-4 flex gap-4">
-                                <img
-                                    src={r.img}
-                                    alt={r.user}
-                                    className="w-12 h-12 rounded-full"
-                                />
-                                <div>
-                                    <div className="flex items-center gap-2">
-                                        <h3 className="font-semibold">{r.user}</h3>
-                                        <span className="text-sm text-gray-500">{r.date}</span>
+                    <div className="max-w-[1500px] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px] gap-6">
+                        {properties.map((item) => (
+                            <div
+                                key={item.id}
+                                className="w-[350px] overflow-hidden shadow-lg bg-white"
+                            >
+                                <div className="relative">
+                                    <img
+                                        src={item.img}
+                                        alt="House"
+                                        className="w-full h-[200px] object-cover"
+                                    />
+
+                                    <div className="absolute top-3 left-3 flex gap-2">
+                                        <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                                            FEATURED
+                                        </span>
+                                        <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                                            FOR SALE
+                                        </span>
                                     </div>
-                                    <div className="flex gap-1 text-yellow-500">
-                                        {[...Array(r.rating)].map((_, i) => (
-                                            <Star key={i} fontSize="small" />
-                                        ))}
+
+                                    <div className="absolute bottom-[-20px] right-4">
+                                        <img
+                                            src="https://i.pravatar.cc/40"
+                                            alt="profile"
+                                            className="w-10 h-10 rounded-full border-2 border-white"
+                                        />
                                     </div>
-                                    <p className="text-gray-600 text-sm mt-1">{r.comment}</p>
+                                </div>
+
+                                <div className="p-4">
+                                    <h2 className="text-lg font-bold">{item.title}</h2>
+                                    <p className="text-gray-500 text-sm">{item.address}</p>
+
+                                    <div className="flex justify-between text-gray-600 text-sm mt-3">
+                                        <div className="flex flex-col items-center">
+                                            <Bed fontSize="small" />
+                                            <span>4 Beds</span>
+                                        </div>
+                                        <div className="flex flex-col items-center">
+                                            <Bathtub fontSize="small" />
+                                            <span>5 Baths</span>
+                                        </div>
+                                        <div className="flex flex-col items-center">
+                                            <Garage fontSize="small" />
+                                            <span>1 Garage</span>
+                                        </div>
+                                        <div className="flex flex-col items-center">
+                                            <SquareFoot fontSize="small" />
+                                            <span>1200 Sq Ft</span>
+                                        </div>
+                                    </div>
+
+                                    <hr className="text-gray-400 mt-2" />
+
+                                    <div className="mt-4 flex justify-between items-center">
+                                        <div>
+                                            <p className="text-gray-400 line-through text-sm">
+                                                {item.oldPrice}
+                                            </p>
+                                            <p className="text-blue-700 font-bold text-lg">
+                                                {item.newPrice}
+                                            </p>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <Link to="/product_view">
+                                                <IconButton size="small">
+                                                    <ArrowOutward fontSize="small" />
+                                                </IconButton></Link>
+                                            <div>
+                                                <Checkbox
+                                                    color="error"
+                                                    icon={<FavoriteBorder />}
+                                                    checkedIcon={<Favorite />}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         ))}
                     </div>
+                </section>
 
-                    <div className="mt-10">
-                        <h2 className="font-semibold text-lg mb-3">Write a Review</h2>
-                        <form className="flex flex-col gap-3 text-sm">
-                            <input
-                                type="text"
-                                placeholder="Name"
-                                className="border rounded-lg px-3 py-2"
-                            />
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                className="border rounded-lg px-3 py-2"
-                            />
-                            <textarea
-                                rows="3"
-                                placeholder="Write your review..."
-                                className="border rounded-lg px-3 py-2"
-                            ></textarea>
-                            <Button variant="contained" className="!bg-blue-600 !text-white">
-                                Submit Review
-                            </Button>
-                        </form>
-                    </div>
-
-                    <div className="mt-10">
-                        <h2 className="font-semibold text-lg mb-3">Similar Listings</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {similarListings.map((listing) => (
-                                <div
-                                    key={listing.id}
-                                    className="border rounded-xl shadow-sm overflow-hidden"
-                                >
-                                    <img
-                                        src={listing.img}
-                                        alt={listing.title}
-                                        className="w-full h-48 object-cover"
-                                    />
-                                    <div className="p-4">
-                                        <h3 className="font-semibold">{listing.title}</h3>
-                                        <p className="text-gray-500 text-sm">{listing.address}</p>
-                                        <p className="text-blue-600 font-bold mt-2">
-                                            {listing.price}
-                                        </p>
-                                        <Link to={`/property/${listing.id}`}>
-                                            <Button
-                                                size="small"
-                                                className="!mt-2 !bg-blue-600 !text-white"
-                                            >
-                                                View Details
-                                            </Button>
-                                        </Link>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
             </div>
+
             <Footer />
         </>
     );

@@ -60,8 +60,11 @@ function Navbar() {
                             <MenuItem onClick={handleClose}>
                                 <Link to="/product_view">Product view</Link>
                             </MenuItem>
-                             <MenuItem onClick={handleClose}>
+                            <MenuItem onClick={handleClose}>
                                 <Link to="/addpropertyform">Add Property Form</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/chiqish" className='text-red-500'>Chiqish</Link>
                             </MenuItem>
                         </Menu>
                     </div>

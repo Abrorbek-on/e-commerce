@@ -1,13 +1,28 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
 
 export default function LoginForm() {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         login: "",
         password: "",
         remember: false,
     });
+
+    useEffect(() => {
+        const savedLogin = localStorage.getItem("login");
+        const savedRemember = localStorage.getItem("remember") === "true";
+
+        if (savedRemember && savedLogin) {
+            setFormData({
+                login: savedLogin,
+                password: "",
+                remember: true,
+            });
+        }
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -19,12 +34,31 @@ export default function LoginForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Login data:", formData);
+
+        if (formData.login === "Abrorbek" && formData.password === "1234") {
+
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
+            let randomStr = '';
+            for (let i = 0; i < 16; i++) {
+                randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            const token = btoa(formData.login + ':' + formData.password + ':' + randomStr);
+
+            localStorage.setItem("token", token);
+
+            if (!formData.remember) {
+                sessionStorage.setItem("token", token);
+            }
+
+            navigate("/");
+        } else {
+            alert("Login yoki password xato!");
+        }
     };
 
     return (
         <>
-
             <header className='max-w-[1920px] mx-auto bg-[#0d263b] h-[80px]'>
                 <nav className='max-w-[1500px] m-auto flex justify-between items-center h-full'>
                     <div>
@@ -37,11 +71,9 @@ export default function LoginForm() {
                             <li><Link to="/contact">Contact</Link></li>
                         </ul>
                     </div>
-                    <div>
-                    </div>
+                    <div></div>
                 </nav>
             </header>
-
 
             <div className="flex justify-center mt-[100px]">
                 <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
@@ -58,7 +90,6 @@ export default function LoginForm() {
                                 className="w-full border-b outline-none py-2"
                             />
                         </div>
-
                         <div>
                             <label className="block text-sm font-medium mb-1">Password</label>
                             <input
@@ -95,12 +126,10 @@ export default function LoginForm() {
                         </button>
                     </form>
                     <Link to="/register" className='text-blue-500 flex justify-center mt-[10px]'>Register</Link>
-
                 </div>
             </div>
 
             {/* <Footer/> */}
-
         </>
     );
 }

@@ -9,6 +9,7 @@ import My_properties from "./Page/My_properties";
 import Product_view from "./Page/Product_view";
 import Contact from "./Page/Contact";
 import My_profile from "./Page/My_profile";
+import Chiqish from "./Page/Chiqish";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/product_view" element={<Product_view />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/my_profile" element={<My_profile />} />
+        <Route path="/chiqish" element={<Chiqish />} />
       </Routes>
     </BrowserRouter>
   );

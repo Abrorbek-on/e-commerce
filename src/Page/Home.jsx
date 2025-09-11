@@ -22,6 +22,7 @@ import {
 } from "@mui/icons-material";
 import { BookmarkIcon } from "lucide-react";
 import Footer from "../Components/Footer";
+import { Link } from "react-router-dom";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -172,9 +173,10 @@ export default function Home() {
                   <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
                 </div>
                 <div className="flex gap-2">
-                  <IconButton size="small">
-                    <ArrowOutward fontSize="small" />
-                  </IconButton>
+                  <Link to="/product_view">
+                    <IconButton size="small">
+                      <ArrowOutward fontSize="small" />
+                    </IconButton></Link>
                   <div>
                     <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
 
@@ -241,9 +243,10 @@ export default function Home() {
                   <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
                 </div>
                 <div className="flex gap-2">
-                  <IconButton size="small">
-                    <ArrowOutward fontSize="small" />
-                  </IconButton>
+                  <Link to="/product_view">
+                    <IconButton size="small">
+                      <ArrowOutward fontSize="small" />
+                    </IconButton></Link>
                   <div>
                     <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                   </div>
@@ -308,9 +311,10 @@ export default function Home() {
                   <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
                 </div>
                 <div className="flex gap-2">
-                  <IconButton size="small">
-                    <ArrowOutward fontSize="small" />
-                  </IconButton>
+                  <Link to="/product_view">
+                    <IconButton size="small">
+                      <ArrowOutward fontSize="small" />
+                    </IconButton></Link>
                   <div>
                     <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                   </div>
@@ -520,9 +524,10 @@ export default function Home() {
                   <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
                 </div>
                 <div className="flex gap-2">
-                  <IconButton size="small">
-                    <ArrowOutward fontSize="small" />
-                  </IconButton>
+                  <Link to="/product_view">
+                    <IconButton size="small">
+                      <ArrowOutward fontSize="small" />
+                    </IconButton></Link>
                   <div>
                     <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                   </div>
@@ -587,9 +592,10 @@ export default function Home() {
                   <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
                 </div>
                 <div className="flex gap-2">
-                  <IconButton size="small">
-                    <ArrowOutward fontSize="small" />
-                  </IconButton>
+                  <Link to="/product_view">
+                    <IconButton size="small">
+                      <ArrowOutward fontSize="small" />
+                    </IconButton></Link>
                   <div>
                     <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                   </div>
@@ -654,9 +660,10 @@ export default function Home() {
                   <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
                 </div>
                 <div className="flex gap-2">
-                  <IconButton size="small">
-                    <ArrowOutward fontSize="small" />
-                  </IconButton>
+                  <Link to="/product_view">
+                    <IconButton size="small">
+                      <ArrowOutward fontSize="small" />
+                    </IconButton></Link>
                   <div>
                     <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                   </div>
@@ -730,7 +737,7 @@ export default function Home() {
       </section>
 
 
-      <Footer/>
+      <Footer />
 
     </>
   );

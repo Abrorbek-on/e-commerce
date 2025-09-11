@@ -6,7 +6,8 @@ import {
     Typography,
     CircularProgress,
     Card,
-    CardContent
+    CardContent,
+    IconButton
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -16,6 +17,8 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
 import { Link } from "react-router-dom";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { Menu, MenuItem } from "@mui/material";
 
 function ContactModal({ open, onClose, loading, success }) {
     return (
@@ -88,6 +91,16 @@ export default function Contact() {
         }
     };
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
     useEffect(() => {
         if (success !== null && !loading) {
             const timer = setTimeout(() => {
@@ -118,6 +131,40 @@ export default function Contact() {
                         </ul>
                     </div>
                     <div>
+
+                        <IconButton onClick={handleClick}>
+                            <PermIdentityIcon className="text-white" />
+                        </IconButton>
+
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            PaperProps={{
+                                style: {
+                                    marginTop: "10px"
+                                }
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_profile">My profile</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_properties">My Properties</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/favorite">Favourites</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/product_view">Product view</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/addpropertyform">Add Property Form</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/chiqish" className='text-red-500'>Chiqish</Link>
+                            </MenuItem>
+                        </Menu>
                     </div>
                 </nav>
             </header>

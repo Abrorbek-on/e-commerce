@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { IconButton, Checkbox, Button } from "@mui/material";
@@ -15,9 +15,19 @@ import SearchIcon from "@mui/icons-material/Search";
 import PaidIcon from "@mui/icons-material/Paid";
 import TuneIcon from "@mui/icons-material/Tune";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { Menu, MenuItem } from "@mui/material";
+
 
 
 function Properties() {
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     const properties = [
         {
             id: 1,
@@ -69,6 +79,11 @@ function Properties() {
         },
     ];
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+
     return (
         <>
             <header className='max-w-[1920px] mx-auto bg-[#0d263b] h-[80px]'>
@@ -85,11 +100,41 @@ function Properties() {
                     </div>
                     <div>
 
-                        <Link to="/login"><Button className="!w-[150px] !text-white !border" variant="Outlined">Login</Button></Link>
+                        <IconButton onClick={handleClick}>
+                            <PermIdentityIcon className="text-white" />
+                        </IconButton>
 
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            PaperProps={{
+                                style: {
+                                    marginTop: "10px"
+                                }
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_profile">My profile</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_properties">My Properties</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/favorite">Favourites</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/product_view">Product view</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/addpropertyform">Add Property Form</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/chiqish" className='text-red-500'>Chiqish</Link>
+                            </MenuItem>
+                        </Menu>
                     </div>
                 </nav>
-
                 <section className="max-w-[1500px] m-auto h-[80px]">
                     <div className="flex gap-x-4 items-center h-full px-4">
                         <Button
@@ -212,9 +257,10 @@ function Properties() {
                                             </p>
                                         </div>
                                         <div className="flex gap-2">
-                                            <IconButton size="small">
-                                                <ArrowOutward fontSize="small" />
-                                            </IconButton>
+                                            <Link to="/product_view">
+                                                <IconButton size="small">
+                                                    <ArrowOutward fontSize="small" />
+                                                </IconButton></Link>
                                             <div>
                                                 <Checkbox
                                                     color="error"

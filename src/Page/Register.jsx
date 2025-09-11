@@ -24,7 +24,6 @@ function Register() {
 
     return (
         <>
-
             <header className='max-w-[1920px] mx-auto bg-[#0d263b] h-[80px]'>
                 <nav className='max-w-[1500px] m-auto flex justify-between items-center h-full'>
                     <div>
