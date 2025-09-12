@@ -1,28 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "../Components/Footer";
 
 export default function LoginForm() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        login: "",
+        email: "",
         password: "",
         remember: false,
     });
-
-    useEffect(() => {
-        const savedLogin = localStorage.getItem("login");
-        const savedRemember = localStorage.getItem("remember") === "true";
-
-        if (savedRemember && savedLogin) {
-            setFormData({
-                login: savedLogin,
-                password: "",
-                remember: true,
-            });
-        }
-    }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -32,28 +18,40 @@ export default function LoginForm() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (formData.login === "Abrorbek" && formData.password === "1234") {
+        try {
+            const response = await fetch("http://localhost:3000/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password,
+                }),
+            });
 
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
-            let randomStr = '';
-            for (let i = 0; i < 16; i++) {
-                randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
+            if (!response.ok) {
+                throw new Error("Login yoki parol noto‘g‘ri!");
             }
 
-            const token = btoa(formData.login + ':' + formData.password + ':' + randomStr);
+            const data = await response.json();
 
-            localStorage.setItem("token", token);
+            // backend JWT token qaytaradi
+            localStorage.setItem("token", data.token.accessToken);
+            localStorage.setItem("refreshToken", data.token.refreshToken);
 
-            if (!formData.remember) {
-                sessionStorage.setItem("token", token);
+            if (formData.remember) {
+                localStorage.setItem("email", formData.email);
+            } else {
+                sessionStorage.setItem("token", data.token.accessToken);
             }
 
             navigate("/");
-        } else {
-            alert("Login yoki password xato!");
+        } catch (error) {
+            alert(error.message);
         }
     };
 
@@ -71,7 +69,6 @@ export default function LoginForm() {
                             <li><Link to="/contact">Contact</Link></li>
                         </ul>
                     </div>
-                    <div></div>
                 </nav>
             </header>
 
@@ -80,12 +77,12 @@ export default function LoginForm() {
                     <h2 className="text-lg font-semibold mb-4">Sign in</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium mb-1">Login</label>
+                            <label className="block text-sm font-medium mb-1">Email</label>
                             <input
-                                type="text"
-                                name="login"
-                                placeholder="Ali Tufa..."
-                                value={formData.login}
+                                type="email"
+                                name="email"
+                                placeholder="email@example.com"
+                                value={formData.email}
                                 onChange={handleChange}
                                 className="w-full border-b outline-none py-2"
                             />
@@ -128,8 +125,6 @@ export default function LoginForm() {
                     <Link to="/register" className='text-blue-500 flex justify-center mt-[10px]'>Register</Link>
                 </div>
             </div>
-
-            {/* <Footer/> */}
         </>
     );
 }

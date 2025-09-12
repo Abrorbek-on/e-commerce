@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import { Box, Typography, Button, Grid, Avatar, Checkbox } from "@mui/material";
 import HotelIcon from "@mui/icons-material/Hotel";
@@ -8,6 +8,10 @@ import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import { IconButton } from "@mui/material";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 import {
   FavoriteBorder, ArrowOutward, Bed, Bathtub, Garage, SquareFoot, LocationOn,
   Phone,
@@ -23,11 +27,30 @@ import {
 import { BookmarkIcon } from "lucide-react";
 import Footer from "../Components/Footer";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
 export default function Home() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [properties, setProperties] = useState([]);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/accommodations");
+        setProperties(res.data);
+      } catch (err) {
+        console.error("Error fetching properties:", err);
+      }
+    };
+    fetchProperties();
+  }, []);
   return (
     <>
       <Navbar />
@@ -111,220 +134,121 @@ export default function Home() {
         </Box>
       </Box>
 
-      <section className="bg-[#595959] h-[480px]"><br />
+      <section className="bg-[#595959] h-[500px]">
         <div className="max-w-[1500px] m-auto text-center">
           <p className="text-[30px]">Recommended</p>
-          <h1 className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>
-        </div>
-        <div className="max-w-[1200px] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px]">
-          <div className="w-[350px] overflow-hidden shadow-lg bg-white">
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                alt="House"
-                className="w-full h-[200px] object-cover"
-              />
-
-              <div className="absolute top-3 left-3 flex gap-42">
-                <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FEATURED
-                </span>
-                <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FOR SALE
-                </span>
-              </div>
-
-              <div className="absolute bottom-[-20px] right-4">
-                <img
-                  src="https://i.pravatar.cc/40"
-                  alt="profile"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-              </div>
-            </div>
-
-            <div className="p-4">
-              <h2 className="text-lg font-bold">New Apartment Nice View</h2>
-              <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
-
-              <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex flex-col items-center">
-                  <Bed fontSize="small" />
-                  <span>4 Beds</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Bathtub fontSize="small" />
-                  <span>5 Baths</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Garage fontSize="small" />
-                  <span>1 Garage</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <SquareFoot fontSize="small" />
-                  <span>1200 Sq Ft</span>
-                </div>
-              </div><hr className="text-gray-400 mt-2" />
-
-
-              <div className="mt-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-400 line-through text-sm">$2,800/mo</p>
-                  <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product_view">
-                    <IconButton size="small">
-                      <ArrowOutward fontSize="small" />
-                    </IconButton></Link>
-                  <div>
-                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-[350px] overflow-hidden shadow-lg bg-white">
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                alt="House"
-                className="w-full h-[200px] object-cover"
-              />
-
-              <div className="absolute top-3 left-3 flex gap-42">
-                <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FEATURED
-                </span>
-                <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FOR SALE
-                </span>
-              </div>
-
-              <div className="absolute bottom-[-20px] right-4">
-                <img
-                  src="https://i.pravatar.cc/40"
-                  alt="profile"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-              </div>
-            </div>
-
-            <div className="p-4">
-              <h2 className="text-lg font-bold">New Apartment Nice View</h2>
-              <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
-
-              <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex flex-col items-center">
-                  <Bed fontSize="small" />
-                  <span>4 Beds</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Bathtub fontSize="small" />
-                  <span>5 Baths</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Garage fontSize="small" />
-                  <span>1 Garage</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <SquareFoot fontSize="small" />
-                  <span>1200 Sq Ft</span>
-                </div>
-              </div><hr className="text-gray-400 mt-2" />
-
-
-
-              <div className="mt-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-400 line-through text-sm">$2,800/mo</p>
-                  <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product_view">
-                    <IconButton size="small">
-                      <ArrowOutward fontSize="small" />
-                    </IconButton></Link>
-                  <div>
-                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-[350px] overflow-hidden shadow-lg bg-white">
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                alt="House"
-                className="w-full h-[200px] object-cover"
-              />
-
-              <div className="absolute top-3 left-3 flex gap-42">
-                <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FEATURED
-                </span>
-                <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FOR SALE
-                </span>
-              </div>
-
-              <div className="absolute bottom-[-20px] right-4">
-                <img
-                  src="https://i.pravatar.cc/40"
-                  alt="profile"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-              </div>
-            </div>
-
-            <div className="p-4">
-              <h2 className="text-lg font-bold">New Apartment Nice View</h2>
-              <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
-
-              <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex flex-col items-center">
-                  <Bed fontSize="small" />
-                  <span>4 Beds</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Bathtub fontSize="small" />
-                  <span>5 Baths</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Garage fontSize="small" />
-                  <span>1 Garage</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <SquareFoot fontSize="small" />
-                  <span>1200 Sq Ft</span>
-                </div>
-              </div><hr className="text-gray-400 mt-2" />
-
-
-              <div className="mt-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-400 line-through text-sm">$2,800/mo</p>
-                  <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product_view">
-                    <IconButton size="small">
-                      <ArrowOutward fontSize="small" />
-                    </IconButton></Link>
-                  <div>
-                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <h1 className="text-gray-500">
+            Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.
+          </h1>
         </div>
 
+        <div className="max-w-[1200px] m-auto mt-[20px]">
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={20}
+            navigation={true}
+            modules={[Navigation]}
+            loop={true}
+            className="mySwiper"
+          >
+            {properties.map((item) => {
+              const avgRating = item.Rating?.length
+                ? (
+                  item.Rating.reduce((sum, r) => sum + r.clean, 0) /
+                  item.Rating.length
+                ).toFixed(1)
+                : "No rating";
+
+              return (
+                <SwiperSlide key={item.id}>
+                  <div className="w-[350px] overflow-hidden shadow-lg bg-white rounded-lg">
+                    <div className="relative">
+                      <img
+                        src={
+                          item.house_img?.[0] || "https://via.placeholder.com/350x200"
+                        }
+                        alt={item.title}
+                        className="w-full h-[200px] object-cover"
+                      />
+                      <div className="absolute top-3 left-3 flex gap-2">
+                        {item.featured && (
+                          <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                            FEATURED
+                          </span>
+                        )}
+                        <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                          {item.listing_type.toUpperCase()}
+                        </span>
+                        <span className="bg-gray-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                          {item.Category?.name}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-[-20px] right-4">
+                        <img
+                          src={item.User?.avatar || "https://i.pravatar.cc/40"}
+                          alt="profile"
+                          className="w-10 h-10 rounded-full border-2 border-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="p-4">
+                      <h2 className="text-lg font-bold">{item.title}</h2>
+                      <p className="text-gray-500 text-sm">{item.location}</p>
+                      <p className="text-yellow-500">{avgRating} ★</p>
+
+                      <div className="flex justify-between text-gray-600 text-sm mt-3">
+                        <div className="flex flex-col items-center">
+                          <Bed fontSize="small" />
+                          <span>4 Beds</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <Bathtub fontSize="small" />
+                          <span>5 Baths</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <Garage fontSize="small" />
+                          <span>1 Garage</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <SquareFoot fontSize="small" />
+                          <span>1200 Sq Ft</span>
+                        </div>
+                      </div>
+
+                      <hr className="text-gray-400 mt-2" />
+
+                      <div className="mt-4 flex justify-between items-center">
+                        <div>
+                          <p className="text-gray-400 line-through text-sm">
+                            ${item.price}
+                          </p>
+                          <p className="text-blue-700 font-bold text-lg">
+                            ${item.total_price}
+                          </p>
+                        </div>
+                        <div className="flex gap-2">
+                          <Link to={`/product_view/${item.id}`}>
+                            <IconButton size="small">
+                              <ArrowOutward fontSize="small" />
+                            </IconButton>
+                          </Link>
+                          <Checkbox
+                            color="error"
+                            icon={<FavoriteBorder />}
+                            checkedIcon={<Favorite />}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </div>
       </section>
+
 
       <section className="max-w-[1500px] m-auto">
         <div className="text-center mt-[20px]">
@@ -467,210 +391,110 @@ export default function Home() {
           <p className="text-[30px] mt-[20px]">Recent Properties for Rent</p>
           <h1 className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>
         </div>
-        <div className="max-w-[1200px] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px]">
-          <div className="w-[350px] overflow-hidden shadow-lg bg-white">
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                alt="House"
-                className="w-full h-[200px] object-cover"
-              />
+        <div className="max-w-[1200px] m-auto mt-[20px]">
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={20}
+            navigation={true}
+            modules={[Navigation]}
+            loop={true}
+            className="mySwiper"
+          >
+            {properties.map((item) => {
+              const avgRating = item.Rating?.length
+                ? (
+                  item.Rating.reduce((sum, r) => sum + r.clean, 0) /
+                  item.Rating.length
+                ).toFixed(1)
+                : "No rating";
 
-              <div className="absolute top-3 left-3 flex gap-42">
-                <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FEATURED
-                </span>
-                <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FOR SALE
-                </span>
-              </div>
+              return (
+                <SwiperSlide key={item.id}>
+                  <div className="w-[350px] overflow-hidden shadow-lg bg-white rounded-lg">
+                    <div className="relative">
+                      <img
+                        src={
+                          item.house_img?.[0] || "https://via.placeholder.com/350x200"
+                        }
+                        alt={item.title}
+                        className="w-full h-[200px] object-cover"
+                      />
+                      <div className="absolute top-3 left-3 flex gap-2">
+                        {item.featured && (
+                          <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                            FEATURED
+                          </span>
+                        )}
+                        <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                          {item.listing_type.toUpperCase()}
+                        </span>
+                        <span className="bg-gray-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                          {item.Category?.name}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-[-20px] right-4">
+                        <img
+                          src={item.User?.avatar || "https://i.pravatar.cc/40"}
+                          alt="profile"
+                          className="w-10 h-10 rounded-full border-2 border-white"
+                        />
+                      </div>
+                    </div>
 
-              <div className="absolute bottom-[-20px] right-4">
-                <img
-                  src="https://i.pravatar.cc/40"
-                  alt="profile"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-              </div>
-            </div>
+                    <div className="p-4">
+                      <h2 className="text-lg font-bold">{item.title}</h2>
+                      <p className="text-gray-500 text-sm">{item.location}</p>
+                      <p className="text-yellow-500">{avgRating} ★</p>
 
-            <div className="p-4">
-              <h2 className="text-lg font-bold">New Apartment Nice View</h2>
-              <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
+                      <div className="flex justify-between text-gray-600 text-sm mt-3">
+                        <div className="flex flex-col items-center">
+                          <Bed fontSize="small" />
+                          <span>4 Beds</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <Bathtub fontSize="small" />
+                          <span>5 Baths</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <Garage fontSize="small" />
+                          <span>1 Garage</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <SquareFoot fontSize="small" />
+                          <span>1200 Sq Ft</span>
+                        </div>
+                      </div>
 
-              <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex flex-col items-center">
-                  <Bed fontSize="small" />
-                  <span>4 Beds</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Bathtub fontSize="small" />
-                  <span>5 Baths</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Garage fontSize="small" />
-                  <span>1 Garage</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <SquareFoot fontSize="small" />
-                  <span>1200 Sq Ft</span>
-                </div>
-              </div><hr className="text-gray-400 mt-2" />
+                      <hr className="text-gray-400 mt-2" />
 
-
-              <div className="mt-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-400 line-through text-sm">$2,800/mo</p>
-                  <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product_view">
-                    <IconButton size="small">
-                      <ArrowOutward fontSize="small" />
-                    </IconButton></Link>
-                  <div>
-                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                      <div className="mt-4 flex justify-between items-center">
+                        <div>
+                          <p className="text-gray-400 line-through text-sm">
+                            ${item.price}
+                          </p>
+                          <p className="text-blue-700 font-bold text-lg">
+                            ${item.total_price}
+                          </p>
+                        </div>
+                        <div className="flex gap-2">
+                          <Link to={`/product_view/${item.id}`}>
+                            <IconButton size="small">
+                              <ArrowOutward fontSize="small" />
+                            </IconButton>
+                          </Link>
+                          <Checkbox
+                            color="error"
+                            icon={<FavoriteBorder />}
+                            checkedIcon={<Favorite />}
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-[350px] overflow-hidden shadow-lg bg-white ">
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                alt="House"
-                className="w-full h-[200px] object-cover"
-              />
-
-              <div className="absolute top-3 left-3 flex gap-42">
-                <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FEATURED
-                </span>
-                <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FOR SALE
-                </span>
-              </div>
-
-              <div className="absolute bottom-[-20px] right-4">
-                <img
-                  src="https://i.pravatar.cc/40"
-                  alt="profile"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-              </div>
-            </div>
-
-            <div className="p-4">
-              <h2 className="text-lg font-bold">New Apartment Nice View</h2>
-              <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
-
-              <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex flex-col items-center">
-                  <Bed fontSize="small" />
-                  <span>4 Beds</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Bathtub fontSize="small" />
-                  <span>5 Baths</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Garage fontSize="small" />
-                  <span>1 Garage</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <SquareFoot fontSize="small" />
-                  <span>1200 Sq Ft</span>
-                </div>
-              </div><hr className="text-gray-400 mt-2" />
-
-
-              <div className="mt-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-400 line-through text-sm">$2,800/mo</p>
-                  <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product_view">
-                    <IconButton size="small">
-                      <ArrowOutward fontSize="small" />
-                    </IconButton></Link>
-                  <div>
-                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-[350px] overflow-hidden shadow-lg bg-white">
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                alt="House"
-                className="w-full h-[200px] object-cover"
-              />
-
-              <div className="absolute top-3 left-3 flex gap-42">
-                <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FEATURED
-                </span>
-                <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                  FOR SALE
-                </span>
-              </div>
-
-              <div className="absolute bottom-[-20px] right-4">
-                <img
-                  src="https://i.pravatar.cc/40"
-                  alt="profile"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-              </div>
-            </div>
-
-            <div className="p-4 ">
-              <h2 className="text-lg font-bold">New Apartment Nice View</h2>
-              <p className="text-gray-500 text-sm">Quincy St, Brooklyn, NY, USA</p>
-
-              <div className="flex justify-between text-gray-600 text-sm mt-3">
-                <div className="flex flex-col items-center">
-                  <Bed fontSize="small" />
-                  <span>4 Beds</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Bathtub fontSize="small" />
-                  <span>5 Baths</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <Garage fontSize="small" />
-                  <span>1 Garage</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <SquareFoot fontSize="small" />
-                  <span>1200 Sq Ft</span>
-                </div>
-              </div><hr className="text-gray-400 mt-2" />
-
-
-              <div className="mt-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-400 line-through text-sm">$2,800/mo</p>
-                  <p className="text-blue-700 font-bold text-lg">$7,500/mo</p>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product_view">
-                    <IconButton size="small">
-                      <ArrowOutward fontSize="small" />
-                    </IconButton></Link>
-                  <div>
-                    <Checkbox {...label} color="error" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
         </div>
 
       </section>
