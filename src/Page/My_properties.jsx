@@ -17,8 +17,8 @@ export default function My_properties() {
     useEffect(() => {
         const userId = localStorage.getItem("userId");
         const url = userId
-            ? `http://localhost:3000/accommodations/my-properties/${userId}`
-            : `http://localhost:3000/accommodations/my-properties`;
+            ? `http://localhost:4000/accommodations/my-properties/${userId}`
+            : `http://localhost:4000/accommodations/my-properties`;
 
         axios.get(url)
             .then(res => {

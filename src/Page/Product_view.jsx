@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Button, Avatar } from "@mui/material";
 import { Star } from "@mui/icons-material";
 import { IconButton, Checkbox } from "@mui/material";
@@ -20,8 +20,27 @@ import {
     FavoriteBorder,
 } from "@mui/icons-material";
 import Footer from "../Components/Footer";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+import axios from "axios";
+
 
 export default function PropertyPage() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const propertyId = queryParams.get("id");
+    console.log("Property ID:", propertyId);
+
+
+
+    const [reviews, setReviews] = useState([]);
+    const [ratings, setRatings] = useState([]);
+    const [properties, setProperties] = useState([]);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
     const features = [
         "Air Conditioning",
         "Lawn",
@@ -40,67 +59,78 @@ export default function PropertyPage() {
         "TV Cable",
         "Dining room",
     ];
+    useEffect(() => {
+        const fetchReviews = async () => {
+            try {
 
-    const reviews = [
-        {
-            id: 1,
-            name: "Jane Cooper",
-            date: "April 6, 2021 at 3:21 AM",
-            rating: 5,
-            text: "Every single thing we tried with John was delicious! Found some awesome places we would definitely go back to on our trip. John was also super friendly and passionate about Beşiktaş and Istanbul.",
-        },
-        {
-            id: 2,
-            name: "Jane Cooper",
-            date: "April 6, 2021 at 3:21 AM",
-            rating: 5,
-            text: "Every single thing we tried with John was delicious! Found some awesome places we would definitely go back to on our trip. John was also super friendly and passionate about Beşiktaş and Istanbul.",
-        },
-    ];
-    const ratings = [
-        { name: "Cleanliness", value: 4.7 },
-        { name: "Communication", value: 4.9 },
-        { name: "Check-in", value: 4.9 },
-        { name: "Accuracy", value: 4.7 },
-        { name: "Location", value: 4.9 },
-        { name: "Value", value: 4.9 },
-    ];
+                const res = await axios.get(`http://localhost:4000/ratings/accommodation/${propertyId}`);
+                console.log("Reviews data:", res.data);
+                console.log("Property ID:", propertyId);
 
-    const properties = [
-        {
-            id: 1,
-            title: "New Apartment Nice View",
-            address: "Quincy St, Brooklyn, NY, USA",
-            img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1350&q=80",
-            oldPrice: "$2,800/mo",
-            newPrice: "$7,500/mo",
-        },
-        {
-            id: 2,
-            title: "Luxury Villa With Pool",
-            address: "Beverly Hills, CA, USA",
-            img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1350&q=80",
-            oldPrice: "$3,500/mo",
-            newPrice: "$9,200/mo",
-        },
-        {
-            id: 3,
-            title: "Cozy Family House",
-            address: "Austin, TX, USA",
-            img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1350&q=80",
-            oldPrice: "$1,800/mo",
-            newPrice: "$4,500/mo",
-        },
-    ]
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
 
-    const handleClose = () => {
-        setAnchorEl(null);
+                setReviews(res.data);
+            } catch (err) {
+                console.error("❌ Error fetching reviews:", err);
+            }
+        };
+        fetchReviews();
+    }, [propertyId]);
+
+
+    useEffect(() => {
+        const fetchProperties = async () => {
+            try {
+                const res = await axios.get("http://localhost:4000/accommodations");
+                setProperties(res.data);
+            } catch (err) {
+                console.error("Error fetching properties:", err);
+            }
+        };
+        fetchProperties();
+    }, []);
+
+    const handleClick = (event) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
+
+
+
+    const [formData, setFormData] = useState({
+        clean: 0,
+        location: 0,
+        communicate: 0,
+        comment: ""
+    })
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const payload = {
+            clean: 5.4,
+            location: 5,
+            communicate: 4,
+            comment: "Juda yaxshi uy",
+            user_id: "5cb73ce6-13fa-409e-abfc-5f8d778118a5",
+            accommodation_id: "c1857ebb-e5ee-423a-9493-ecaa3b70eaae",
+        };
+
+
+        try {
+            const res = await axios.post('http://localhost:4000/ratings', payload);
+            console.log('✅ Success:', res.data);
+            setReviews(prev => [...prev, res.data]);
+        } catch (error) {
+            console.error('❌ Error details:', error.response?.data || error.message);
+            console.log('✅ Success:', res.data);
+
+        }
     };
+
+
+
+
+
 
     return (
         <>
@@ -457,68 +487,131 @@ export default function PropertyPage() {
                         </div>
                     ))}
                 </div>
-
                 <div className="grid md:grid-cols-2 gap-6 mb-10">
-                    {reviews.map((rev) => (
-                        <div key={rev.id} className="border rounded-xl p-4 shadow-sm">
-                            <div className="flex items-center gap-3 mb-2">
-                                <Avatar src="https://randomuser.me/api/portraits/women/2.jpg" />
-                                <div>
-                                    <div className="font-medium">{rev.name}</div>
-                                    <div className="text-xs text-gray-500">{rev.date}</div>
+                    {reviews.length > 0 ? (
+                        reviews.map((rev) => (
+                            <div key={rev.id} className="border rounded-xl p-4 shadow-sm">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <Avatar src={rev.user?.avatar || "https://i.pravatar.cc/40"} />
+                                    <div>
+                                        <div className="font-medium">
+                                            {rev.user?.firstName ? `${rev.user.firstName} ${rev.user.lastName}` : "Anonymous"}
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div className="flex items-center text-yellow-500 mb-2">
+                                    {[...Array(Math.round((rev.clean + rev.location + rev.communicate) / 3))].map((_, i) => (
+                                        <Star key={i} fontSize="small" />
+                                    ))}
+                                    <span className="text-xs text-gray-500 ml-2">
+                                        ({((rev.clean + rev.location + rev.communicate) / 3).toFixed(1)} stars)
+                                    </span>
+                                </div>
+
+                                <p className="text-gray-600 text-sm">{rev.comment || "Hali review yo‘q"}</p>
                             </div>
-                            <div className="flex items-center text-yellow-500 mb-2">
-                                {[...Array(rev.rating)].map((_, i) => (
-                                    <Star key={i} fontSize="small" />
-                                ))}
-                                <span className="text-xs text-gray-500 ml-2">
-                                    ({rev.rating} reviews)
-                                </span>
-                            </div>
-                            <p className="text-gray-600 text-sm">{rev.text}</p>
-                        </div>
-                    ))}
+                        ))
+                    ) : (
+                        <p className="text-gray-500 text-sm">Hali review yo‘q</p>
+                    )}
+
                 </div>
 
-                <h2 className="text-xl font-semibold mb-4">Write a Review</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+
+
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                     {ratings.map((r, i) => (
                         <div key={i}>
-                            <div className="flex items-center text-sm text-gray-700">
-                                {r.name}
+                            <div className="flex justify-between text-sm text-gray-700">
+                                <span>{r.name}</span>
+                                <span>{r.value.toFixed(1)}</span>
                             </div>
-                            <div className="flex text-yellow-500">
-                                {[...Array(5)].map((_, i) => (
-                                    <Star key={i} fontSize="small" />
-                                ))}
+                            <div className="w-full bg-gray-200 rounded h-2 mt-1">
+                                <div
+                                    className="bg-blue-500 h-2 rounded"
+                                    style={{ width: `${(r.value / 5) * 100}%` }}
+                                ></div>
                             </div>
                         </div>
                     ))}
                 </div>
 
-                <form className="space-y-4">
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        className="w-full border rounded px-3 py-2 text-sm"
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        className="w-full border rounded px-3 py-2 text-sm"
-                    />
-                    <textarea
-                        placeholder="Enter Your Message"
-                        className="w-full border rounded px-3 py-2 text-sm h-28"
-                    />
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Cleanliness</label>
+                        <input
+                            type="number"
+                            name="clean"
+                            value={formData.clean}
+                            onChange={(e) =>
+                                setFormData({ ...formData, clean: parseFloat(e.target.value) })
+                            }
+                            min={0}
+                            max={5}
+                            step={0.1}
+                            className="mt-1 block w-full border border-gray-300 rounded px-3 py-2 text-sm"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Location</label>
+                        <input
+                            type="number"
+                            name="location"
+                            value={formData.location}
+                            onChange={(e) =>
+                                setFormData({ ...formData, location: parseFloat(e.target.value) })
+                            }
+                            min={0}
+                            max={5}
+                            step={0.1}
+                            className="mt-1 block w-full border border-gray-300 rounded px-3 py-2 text-sm"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Communication</label>
+                        <input
+                            type="number"
+                            name="communicate"
+                            value={formData.communicate}
+                            onChange={(e) =>
+                                setFormData({ ...formData, communicate: parseFloat(e.target.value) })
+                            }
+                            min={0}
+                            max={5}
+                            step={0.1}
+                            className="mt-1 block w-full border border-gray-300 rounded px-3 py-2 text-sm"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Comment</label>
+                        <textarea
+                            name="comment"
+                            value={formData.comment}
+                            onChange={(e) =>
+                                setFormData({ ...formData, comment: e.target.value })
+                            }
+                            rows={4}
+                            className="mt-1 block w-full border border-gray-300 rounded px-3 py-2 text-sm"
+                            placeholder="Write your review..."
+                        />
+                    </div>
+
                     <button
-                        type="button"
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+                        type="submit"
+                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded"
                     >
                         Send your review
                     </button>
                 </form>
+
+
             </div>
 
             <div className="max-w-[1500px] m-auto mt-[50px]">
@@ -530,89 +623,109 @@ export default function PropertyPage() {
                             Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.
                         </h1>
                     </div>
+                    <div className="max-w-[1200px] m-auto mt-[20px]">
+                        <Swiper
+                            slidesPerView={3}
+                            spaceBetween={20}
+                            navigation={true}
+                            modules={[Navigation]}
+                            loop={properties.length > 3}
+                        >
 
-                    <div className="max-w-[1500px] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px] gap-6">
-                        {properties.map((item) => (
-                            <div
-                                key={item.id}
-                                className="w-[350px] overflow-hidden shadow-lg bg-white"
-                            >
-                                <div className="relative">
-                                    <img
-                                        src={item.img}
-                                        alt="House"
-                                        className="w-full h-[200px] object-cover"
-                                    />
-
-                                    <div className="absolute top-3 left-3 flex gap-2">
-                                        <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                                            FEATURED
-                                        </span>
-                                        <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                                            FOR SALE
-                                        </span>
-                                    </div>
-
-                                    <div className="absolute bottom-[-20px] right-4">
-                                        <img
-                                            src="https://i.pravatar.cc/40"
-                                            alt="profile"
-                                            className="w-10 h-10 rounded-full border-2 border-white"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="p-4">
-                                    <h2 className="text-lg font-bold">{item.title}</h2>
-                                    <p className="text-gray-500 text-sm">{item.address}</p>
-
-                                    <div className="flex justify-between text-gray-600 text-sm mt-3">
-                                        <div className="flex flex-col items-center">
-                                            <Bed fontSize="small" />
-                                            <span>4 Beds</span>
-                                        </div>
-                                        <div className="flex flex-col items-center">
-                                            <Bathtub fontSize="small" />
-                                            <span>5 Baths</span>
-                                        </div>
-                                        <div className="flex flex-col items-center">
-                                            <Garage fontSize="small" />
-                                            <span>1 Garage</span>
-                                        </div>
-                                        <div className="flex flex-col items-center">
-                                            <SquareFoot fontSize="small" />
-                                            <span>1200 Sq Ft</span>
-                                        </div>
-                                    </div>
-
-                                    <hr className="text-gray-400 mt-2" />
-
-                                    <div className="mt-4 flex justify-between items-center">
-                                        <div>
-                                            <p className="text-gray-400 line-through text-sm">
-                                                {item.oldPrice}
-                                            </p>
-                                            <p className="text-blue-700 font-bold text-lg">
-                                                {item.newPrice}
-                                            </p>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <Link to="/product_view">
-                                                <IconButton size="small">
-                                                    <ArrowOutward fontSize="small" />
-                                                </IconButton></Link>
-                                            <div>
-                                                <Checkbox
-                                                    color="error"  
-                                                    icon={<FavoriteBorder />}
-                                                    checkedIcon={<Favorite />}
+                            {properties.map((item) => {
+                                const avgRating = item.Rating?.length
+                                    ? item.Rating.reduce((sum, r) => sum + r.clean, 0) / item.Rating.length
+                                    : null;
+                                return (
+                                    <SwiperSlide key={item.id}>
+                                        <div className="w-[350px] overflow-hidden shadow-lg bg-white rounded-lg">
+                                            <div className="relative">
+                                                <img
+                                                    src={
+                                                        item.house_img?.[0] || "https://via.placeholder.com/350x200"
+                                                    }
+                                                    alt={item.title}
+                                                    className="w-full h-[200px] object-cover"
                                                 />
+                                                <div className="absolute top-3 left-3 flex gap-2">
+                                                    {item.featured && (
+                                                        <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                                                            FEATURED
+                                                        </span>
+                                                    )}
+                                                    <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                                                        {item.listing_type.toUpperCase()}
+                                                    </span>
+                                                    <span className="bg-gray-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                                                        {item.Category?.name}
+                                                    </span>
+                                                </div>
+                                                <div className="absolute bottom-[-20px] right-4">
+                                                    <img
+                                                        src={item.User?.avatar || "https://i.pravatar.cc/40"}
+                                                        alt="profile"
+                                                        className="w-10 h-10 rounded-full border-2 border-white"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="p-4">
+                                                <h2 className="text-lg font-bold">{item.title}</h2>
+                                                <p className="text-gray-500 text-sm">{item.location}</p>
+                                                <p className="text-yellow-500">{avgRating} ★</p>
+
+                                                <div className="flex justify-between text-gray-600 text-sm mt-3">
+                                                    <div className="flex flex-col items-center">
+                                                        <Bed fontSize="small" />
+                                                        <span>4 Beds</span>
+                                                    </div>
+                                                    <div className="flex flex-col items-center">
+                                                        <Bathtub fontSize="small" />
+                                                        <span>5 Baths</span>
+                                                    </div>
+                                                    <div className="flex flex-col items-center">
+                                                        <Garage fontSize="small" />
+                                                        <span>1 Garage</span>
+                                                    </div>
+                                                    <div className="flex flex-col items-center">
+                                                        <SquareFoot fontSize="small" />
+                                                        <span>1200 Sq Ft</span>
+                                                    </div>
+                                                </div>
+
+                                                <hr className="text-gray-400 mt-2" />
+
+                                                <div className="mt-4 flex justify-between items-center">
+                                                    <div>
+                                                        <p className="text-gray-400 line-through text-sm">
+                                                            ${item.price}
+                                                        </p>
+                                                        <p className="text-blue-700 font-bold text-lg">
+                                                            ${item.total_price}
+                                                        </p>
+                                                    </div>
+                                                    <div className="flex gap-2">
+                                                        <Link to={`/product_view/${item.id}`}>
+                                                            <IconButton size="small">
+                                                                <ArrowOutward fontSize="small" />
+                                                            </IconButton>
+                                                        </Link>
+
+
+
+                                                        <Checkbox
+                                                            color="error"
+                                                            icon={<FavoriteBorder />}
+                                                            checkedIcon={<Favorite />}
+                                                        />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                                    </SwiperSlide>
+                                );
+                            })}
+                        </Swiper>
                     </div>
                 </section>
 

@@ -25,7 +25,7 @@ function Favourite({ userId }) {
     useEffect(() => {
         const fetchProperties = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/accommodations");
+                const res = await axios.get("http://localhost:4000/accommodations");
                 setProperties(res.data);
             } catch (err) {
                 console.error("Error fetching properties:", err);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -9,6 +10,8 @@ export default function LoginForm() {
         password: "",
         remember: false,
     });
+
+    const [error, setError] = useState("");
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -20,38 +23,28 @@ export default function LoginForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
 
         try {
-            const response = await fetch("http://localhost:3000/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: formData.email,
-                    password: formData.password,
-                }),
+            const { data } = await axios.post("http://localhost:4000/auth/login", {
+                email: formData.email,
+                password: formData.password,
             });
 
-            if (!response.ok) {
-                throw new Error("Login yoki parol noto‘g‘ri!");
-            }
+            if (data?.token?.accessToken) {
+                localStorage.setItem("token", data.token.accessToken);
+                localStorage.setItem("refreshToken", data.token.refreshToken);
 
-            const data = await response.json();
+                if (data.user) {
+                    localStorage.setItem("user", JSON.stringify(data.user));
+                }
 
-            // backend JWT token qaytaradi
-            localStorage.setItem("token", data.token.accessToken);
-            localStorage.setItem("refreshToken", data.token.refreshToken);
-
-            if (formData.remember) {
-                localStorage.setItem("email", formData.email);
+                navigate("/");
             } else {
-                sessionStorage.setItem("token", data.token.accessToken);
+                navigate("/register");
             }
-
-            navigate("/");
-        } catch (error) {
-            alert(error.message);
+        } catch (err) {
+            setError("Login yoki parol xato!");
         }
     };
 
@@ -85,6 +78,7 @@ export default function LoginForm() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 className="w-full border-b outline-none py-2"
+                                required
                             />
                         </div>
                         <div>
@@ -96,6 +90,7 @@ export default function LoginForm() {
                                 value={formData.password}
                                 onChange={handleChange}
                                 className="w-full border-b outline-none py-2"
+                                required
                             />
                         </div>
 
@@ -114,6 +109,8 @@ export default function LoginForm() {
                                 Forgot
                             </a>
                         </div>
+
+                        {error && <p className="text-red-500 text-sm">{error}</p>}
 
                         <button
                             type="submit"

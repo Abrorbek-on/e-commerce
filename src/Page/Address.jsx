@@ -1,494 +1,315 @@
-import { useState } from "react";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../Components/Footer";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import { Menu, MenuItem, IconButton } from "@mui/material";
+import Footer from "../Components/Footer";
+import axios from "axios";
 
-export default function AddPropertyForm() {
+const AddPropertyForm = () => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const userId = storedUser ? storedUser.id : null;
+    const token = localStorage.getItem("token");
+
+    const [categories, setCategories] = useState([]);
     const [formData, setFormData] = useState({
-        contactName: "",
-        contactType: "",
-        street: "",
-        city: "",
-        state: "",
-        zip: "",
-        country: "",
-        price: "",
-        location: "",
+        title: "",
         description: "",
-        category: "",
-        amenities: [],
-        images: [],
-    })
+        address: "",
+        price: "",
+        discount: "",
+        build_year: "",
+        latitude: "",
+        longitude: "",
+        country: "Uzbekistan",
+        map_url: "",
+        listing_type: "SALE",
+        user_id: userId || "",
+        category_id: "",
+    });
 
-    const amenitiesList = [
-        "Air conditioning", "Barbeque", "Dryer", "Gym", "Laundry",
-        "Lawn", "Microwave", "Outdoor Shower", "Refrigerator", "Stunning views",
-        "Dining Room", "Fireplace", "Pets Allowed", "Unit Washer/Dryer", "Onsite Parking",
-        "Waterfront", "Parking", "Doorman", "Central Heating", "Cleaning Service",
-    ]
+    useEffect(() => {
+        fetch("http://localhost:4000/categories")
+            .then((res) => res.json())
+            .then((data) => setCategories(data))
+            .catch((err) => console.error("Category fetch error:", err));
+    }, []);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
-
-    const handleAmenityChange = (amenity) => {
-        setFormData((prev) => {
-            const isSelected = prev.amenities.includes(amenity)
-            return {
-                ...prev,
-                amenities: isSelected
-                    ? prev.amenities.filter((a) => a !== amenity)
-                    : [...prev.amenities, amenity],
-            }
-        })
-    }
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const handleClick = (event) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
 
-    const handleClose = () => {
-        setAnchorEl(null);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!userId) {
+            alert("Iltimos, avval tizimga kiring");
+            return;
+        }
+
+        const categoryIdNum = parseInt(formData.category_id, 10);
+        if (isNaN(categoryIdNum)) {
+            alert("Iltimos, to'g'ri kategoriya tanlang");
+            return;
+        }
+
+        const payload = {
+            ...formData,
+            category_id: categoryIdNum,
+            img: [
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv0nUU_l0yeQy4z_EU4uNRwB8VsENrg71MwQ&s",
+            ],
+            isActive: true,
+            features: ["balcony", "garage"],
+            documents: [],
+            extra_features: [],
+            price: parseFloat(formData.price),
+            discount: parseFloat(formData.discount),
+            build_year: Number(formData.build_year),
+            latitude: parseFloat(formData.latitude) || 0,
+            longitude: parseFloat(formData.longitude) || 0,
+            listing_type:
+                formData.listing_type === "RENT" ? "ForRent" : "ForSale",
+        };
+
+        try {
+            const res = await axios.post(
+                "http://localhost:4000/accommodations",
+                payload,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            alert("Property created successfully!");
+            console.log("✅ SUCCESS:", res.data);
+        } catch (err) {
+            console.error("❌ Server error:", err.response?.data || err.message);
+            alert(
+                err.response?.data?.message || "Property yaratishda xatolik yuz berdi"
+            );
+        }
     };
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleFileChange = (e) => {
-        setFormData({ ...formData, images: Array.from(e.target.files) })
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log("Property Data:", formData)
-    }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <>
             <header className="bg-[#0f2937] text-white">
                 <div className="max-w-7xl mx-auto px-4">
                     <nav className="flex items-center justify-between h-16">
-                        <div className="flex items-center">
-
-                            <img src="assets/logo.png" alt="Houzing img" />
-                        </div>
                         <div>
-                            <ul className="flex text-white gap-[30px]">
-                                <li><Link to="/">Home</Link></li>
-                                <li><Link to="/properties">Properties</Link></li>
-                                <li><Link to="/contact">Contact</Link></li>
-                            </ul>
+                            <img src="assets/logo.png" alt="Houzing Logo" />
                         </div>
-                        <div className="w-8">
-                            <IconButton onClick={handleClick}>
-                                <PermIdentityIcon className="text-white" />
-                            </IconButton>
-
-                            <Menu
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                                PaperProps={{
-                                    style: {
-                                        marginTop: "10px"
-                                    }
-                                }}
-                            >
-                                <MenuItem onClick={handleClose}>
-                                    <Link to="/my_profile">My profile</Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                    <Link to="/my_properties">My Properties</Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                    <Link to="/favorite">Favourites</Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                    <Link to="/product_view">Product view</Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                    <Link to="/addpropertyform">Add Property Form</Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                    <Link to="/chiqish" className='text-red-500'>Chiqish</Link>
-                                </MenuItem>
-                            </Menu>
-                        </div>
+                        <ul className="flex gap-8">
+                            <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/properties">Properties</Link>
+                            </li>
+                            <li>
+                                <Link to="/contact">Contact</Link>
+                            </li>
+                        </ul>
+                        <IconButton onClick={handleClick}>
+                            <PermIdentityIcon className="text-white" />
+                        </IconButton>
+                        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_profile">My profile</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_properties">My Properties</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/favorite">Favourites</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/product_view">Product view</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/addpropertyform">Add Property Form</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/chiqish" className="text-red-500">
+                                    Chiqish
+                                </Link>
+                            </MenuItem>
+                        </Menu>
                     </nav>
                 </div>
             </header>
 
-            <main className="max-w-4xl mx-auto px-4 py-8">
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-                    <h1 className="text-2xl font-semibold text-gray-900 mb-8">Add new property</h1>
+            <div className="max-w-7xl mx-auto px-4 py-10">
+                <h1 className="text-2xl font-semibold mb-8">Add new property</h1>
 
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                        <div>
-                            <h2 className="text-lg font-medium text-gray-900 mb-4">
-                                Contact information
-                            </h2>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <input
-                                    type="text"
-                                    name="contactName"
-                                    placeholder="Property title*"
-                                    value={formData.contactName}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md 
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                                <input
-                                    type="text"
-                                    name="contactType"
-                                    placeholder="Type"
-                                    value={formData.contactType}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md 
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                            </div>
-
-                            <div className="mt-4">
-                                <textarea
-                                    name="description"
-                                    placeholder="Property Description*"
-                                    value={formData.description}
-                                    onChange={handleChange}
-                                    rows={3}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md 
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <h2 className="text-lg font-medium text-gray-900 mb-4">Additional</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <input
-                                    type="text"
-                                    name="propertyId"
-                                    placeholder="Property ID"
-                                    value={formData.propertyId}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                                <select
-                                    name="parentProperty"
-                                    value={formData.parentProperty}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                >
-                                    <option value="">Parent property</option>
-                                    <option value="house">House</option>
-                                    <option value="apartment">Apartment</option>
-                                </select>
-                                <select
-                                    name="status"
-                                    value={formData.status}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                >
-                                    <option value="">Status</option>
-                                    <option value="available">Available</option>
-                                    <option value="sold">Sold</option>
-                                </select>
-
-                                <input
-                                    type="text"
-                                    name="label"
-                                    placeholder="Label"
-                                    value={formData.label}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                                <input
-                                    type="text"
-                                    name="material"
-                                    placeholder="Material"
-                                    value={formData.material}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                                <input
-                                    type="number"
-                                    name="rooms"
-                                    placeholder="Rooms"
-                                    value={formData.rooms}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-
-                                <input
-                                    type="number"
-                                    name="beds"
-                                    placeholder="Beds"
-                                    value={formData.beds}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                                <input
-                                    type="number"
-                                    name="baths"
-                                    placeholder="Baths"
-                                    value={formData.baths}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                                <input
-                                    type="number"
-                                    name="garages"
-                                    placeholder="Garages"
-                                    value={formData.garages}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-
-                                <input
-                                    type="text"
-                                    name="yearBuild"
-                                    placeholder="Year build"
-                                    value={formData.yearBuild}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                                <input
-                                    type="text"
-                                    name="homeArea"
-                                    placeholder="Home area (sqft)"
-                                    value={formData.homeArea}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                                <input
-                                    type="text"
-                                    name="lotDimensions"
-                                    placeholder="Lot dimensions"
-                                    value={formData.lotDimensions}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-
-                                <input
-                                    type="text"
-                                    name="lotArea"
-                                    placeholder="Lot area (sqft)"
-                                    value={formData.lotArea}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent md:col-span-3"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="space-y-8">
-                            <div className="p-6 border rounded-lg bg-white shadow-sm">
-                                <h2 className="text-lg font-medium text-gray-900 mb-4">Price</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <input
-                                        type="number"
-                                        name="price"
-                                        placeholder="Price ($)"
-                                        value={formData.price}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="pricePrefix"
-                                        placeholder="Price Prefix"
-                                        value={formData.pricePrefix}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="priceSuffix"
-                                        placeholder="Price Suffix"
-                                        value={formData.priceSuffix}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="priceCustom"
-                                        placeholder="Price Custom"
-                                        value={formData.priceCustom}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="p-6 border rounded-lg bg-white shadow-sm">
-                                <h2 className="text-lg font-medium text-gray-900 mb-4">Location</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                    <input
-                                        type="text"
-                                        name="region"
-                                        placeholder="Regions"
-                                        value={formData.region}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="location"
-                                        placeholder="Friendly address"
-                                        value={formData.location}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-
-                                </div>
-                                <input
-                                    type="text"
-                                    name="location"
-                                    placeholder="Map location"
-                                    value={formData.location}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                /> <br /><br />
-
-                                <div className="h-64 rounded-lg border border-gray-300 overflow-hidden">
-                                    <iframe
-                                        title="map"
-                                        width="100%"
-                                        height="100%"
-                                        frameBorder="0"
-                                        className="rounded-lg"
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3516.49194870643!2d-82.6136!3d27.5006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c3130a5c7bbd3d%3A0x3f0d22c8961f0b4b!2sPalma%20Sola!5e0!3m2!1sen!2sus!4v1694253694689!5m2!1sen!2sus"
-                                        allowFullScreen=""
-                                        loading="lazy"
-                                    ></iframe>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                                    <input
-                                        type="text"
-                                        name="latitude"
-                                        placeholder="Latitude"
-                                        value={formData.latitude}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="longitude"
-                                        placeholder="Longitude"
-                                        value={formData.longitude}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="space-y-8">
-                            <div className="p-6 border rounded-lg bg-white shadow-sm">
-                                <h2 className="text-lg font-medium text-gray-900 mb-4">Media</h2>
-
-                                <div className="grid grid-cols-3 gap-4 mb-4">
-                                    {Array.from({ length: 3 }).map((_, i) => (
-                                        <div
-                                            key={i}
-                                            className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center"
-                                        >
-                                            <span className="text-gray-400 text-sm">+</span>
-                                        </div>
-                                    ))}
-                                </div>
-                                <button className="px-4 py-2 mb-4 border border-blue-500 text-blue-600 rounded-md hover:bg-blue-50">
-                                    Upload
-                                </button>
-
-                                <div className="mb-4">
-                                    <p className="text-sm text-gray-700 mb-1">Gallery</p>
-                                    <button className="px-4 py-2 border border-blue-500 text-blue-600 rounded-md hover:bg-blue-50">
-                                        Upload
-                                    </button>
-                                </div>
-
-                                <div className="mb-4">
-                                    <p className="text-sm text-gray-700 mb-1">Attachment</p>
-                                    <div className="flex items-center space-x-3 mb-2">
-                                        <span className="text-gray-600 text-sm border px-3 py-1 rounded">
-                                            test_property.pdf
-                                        </span>
-                                    </div>
-                                    <button className="px-4 py-2 border border-blue-500 text-blue-600 rounded-md hover:bg-blue-50">
-                                        Upload
-                                    </button>
-                                </div>
-
-                                <input
-                                    type="text"
-                                    placeholder="Video link"
-                                    value={formData.video}
-                                    onChange={(e) => setFormData({ ...formData, video: e.target.value })}
-                                    className="w-full mb-3 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Virtual tour"
-                                    value={formData.tour}
-                                    onChange={(e) => setFormData({ ...formData, tour: e.target.value })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
-
-                            <div className="p-6 border rounded-lg bg-white shadow-sm">
-                                <h2 className="text-lg font-medium text-gray-900 mb-4">Amenities</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                    {amenitiesList.map((amenity) => (
-                                        <label key={amenity} className="flex items-center space-x-2 cursor-pointer">
-                                            <input
-                                                type="checkbox"
-                                                checked={formData.amenities.includes(amenity)}
-                                                onChange={() => handleAmenityChange(amenity)}
-                                                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                                            />
-                                            <span className="text-sm text-gray-700">{amenity}</span>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h2 className="text-lg font-medium text-gray-900 mb-4">Select Energy Class</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <input
-                                    type="text"
-                                    name="region"
-                                    placeholder="Energy class"
-                                    value={formData.region}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                <input
-                                    type="text"
-                                    name="location"
-                                    placeholder="Energy Index in kWh/m2a"
-                                    value={formData.location}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-
-                            </div>
-                        </div>
-
-                        <div className="pt-4">
-                            <button
-                                type="submit"
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-md transition-colors duration-200"
+                <form onSubmit={handleSubmit}>
+                    <div className="bg-white shadow p-6 rounded-lg mb-8">
+                        <h2 className="text-lg font-medium mb-4">Basic information</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input
+                                type="text"
+                                name="title"
+                                value={formData.title}
+                                onChange={handleChange}
+                                placeholder="Property title*"
+                                className="border p-2 rounded"
+                                required
+                            />
+                            <select
+                                name="listing_type"
+                                value={formData.listing_type}
+                                onChange={handleChange}
+                                className="border p-2 rounded"
                             >
-                                Submit
-                            </button>
+                                <option value="SALE">Sale</option>
+                                <option value="RENT">Rent</option>
+                            </select>
                         </div>
-                    </form>
-                </div>
-            </main>
+
+                        <textarea
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            placeholder="Property Description*"
+                            className="w-full border p-2 rounded mt-4"
+                            rows="4"
+                            required
+                        />
+
+                        <div className="mt-4">
+                            <label htmlFor="category_id" className="block mb-1 font-medium">
+                                Category*
+                            </label>
+                            <select
+                                name="category_id"
+                                id="category_id"
+                                value={formData.category_id}
+                                onChange={handleChange}
+                                className="border p-2 rounded w-full"
+                                required
+                            >
+                                <option value="">Select a category</option>
+                                {categories.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>
+                                        {cat.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="bg-white shadow p-6 rounded-lg mb-8">
+                        <h2 className="text-lg font-medium mb-4">Location</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <input
+                                type="text"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                placeholder="Address"
+                                className="border p-2 rounded"
+                                required
+                            />
+                            <input
+                                type="text"
+                                name="country"
+                                value={formData.country}
+                                onChange={handleChange}
+                                placeholder="Country"
+                                className="border p-2 rounded"
+                                required
+                            />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input
+                                type="text"
+                                name="latitude"
+                                value={formData.latitude}
+                                onChange={handleChange}
+                                placeholder="Latitude"
+                                className="border p-2 rounded"
+                                required
+                            />
+                            <input
+                                type="text"
+                                name="longitude"
+                                value={formData.longitude}
+                                onChange={handleChange}
+                                placeholder="Longitude"
+                                className="border p-2 rounded"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className="bg-white shadow p-6 rounded-lg mb-8">
+                        <h2 className="text-lg font-medium mb-4">Price</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input
+                                type="number"
+                                name="price"
+                                value={formData.price}
+                                onChange={handleChange}
+                                placeholder="Price"
+                                className="border p-2 rounded"
+                                required
+                            />
+                            <input
+                                type="number"
+                                name="discount"
+                                value={formData.discount}
+                                onChange={handleChange}
+                                placeholder="Discount"
+                                className="border p-2 rounded"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className="bg-white shadow p-6 rounded-lg mb-8">
+                        <h2 className="text-lg font-medium mb-4">Additional Info</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input
+                                type="number"
+                                name="build_year"
+                                value={formData.build_year}
+                                onChange={handleChange}
+                                placeholder="Build Year"
+                                className="border p-2 rounded"
+                                required
+                            />
+                            <input
+                                type="text"
+                                name="map_url"
+                                value={formData.map_url}
+                                onChange={handleChange}
+                                placeholder="Map URL"
+                                className="border p-2 rounded"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+                    >
+                        Submit Property
+                    </button>
+                </form>
+            </div>
+
             <Footer />
-        </div>
-    )
-}
+        </>
+    );
+};
+
+export default AddPropertyForm;

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -16,7 +17,8 @@ function Register() {
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -31,10 +33,9 @@ function Register() {
     setError("");
 
     try {
-      // confirmPassword ni yubormaymiz
       const { confirmPassword, ...dataToSend } = formData;
 
-      const res = await fetch("http://localhost:3000/auth/register", {
+      const res = await fetch("http://localhost:4000/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataToSend),
@@ -113,8 +114,7 @@ function Register() {
               className="w-full border-b outline-none py-2 bg-transparent"
               required
             >
-              <option value="">User role</option>
-              {/* Backend enumga mos */}
+              <option value="">Select role</option>
               <option value="User">User</option>
               <option value="Customer">Customer</option>
             </select>
@@ -145,6 +145,7 @@ function Register() {
               {loading ? "Registering..." : "Register"}
             </button>
           </form>
+
           <Link to="/login" className="text-blue-500 flex justify-center mt-[10px]">
             Login
           </Link>

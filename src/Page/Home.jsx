@@ -43,13 +43,28 @@ export default function Home() {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/accommodations");
+        const res = await axios.get("http://localhost:4000/accommodations");
         setProperties(res.data);
       } catch (err) {
         console.error("Error fetching properties:", err);
       }
     };
     fetchProperties();
+  }, []);
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("http://localhost:4000/accommodations");
+        setCategories(res.data);
+      } catch (error) {
+        console.error("Error fetching accommodations:", error);
+      }
+    };
+
+    fetchCategories();
   }, []);
   return (
     <>
@@ -287,59 +302,43 @@ export default function Home() {
       <section className="max-w-[1500px] m-auto">
         <div className="text-center mt-[50px]">
           <strong className="text-[30px]">Category</strong>
-          <p className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</p>
+          <p className="text-gray-500">
+            Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.
+          </p>
         </div>
-        <div className="flex justify-between">
-          <div className="flex justify-between">
-            <div className="relative">
-              <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
 
-              <div className="absolute inset-0 flex items-center justify-center">
-                <img src="assets/Group (1).png" alt="" />
-              </div>
-              <div className="absolute inset-0 flex mt-[100px] items-center text-white justify-center">
-                <p>House</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <div className="relative">
-              <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+        <div className="mt-10 max-w-[1500px] m-auto">
+          <Swiper
+            slidesPerView={4}
+            spaceBetween={20}
+            navigation
+            modules={[Navigation]}
+            loop={true}
+          >
+            {categories.map((item) => (
+              <SwiperSlide key={item.id}>
+                <div className="relative">
+                  <img
+                    src={item.house_img}
+                    alt={item.title}
+                    className="rounded-2xl w-[100%] h-[250px] object-cover"
+                  />
 
-              <div className="absolute inset-0 flex items-center justify-center">
-                <img src="assets/Group (1).png" alt="" />
-              </div>
-              <div className="absolute inset-0 flex mt-[100px] items-center text-white justify-center">
-                <p>House</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <div className="relative">
-              <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <img src="assets/Group (1).png" alt="overlay" />
+                  </div>
 
-              <div className="absolute inset-0 flex items-center justify-center">
-                <img src="assets/Group (1).png" alt="" />
-              </div>
-              <div className="absolute inset-0 flex mt-[100px] items-center text-white justify-center">
-                <p>House</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <div className="relative">
-              <img src="assets/unsplash_XbwHrt87mQ0.png" alt="" />
-
-              <div className="absolute inset-0 flex items-center justify-center">
-                <img src="assets/Group (1).png" alt="" />
-              </div>
-              <div className="absolute inset-0 flex mt-[100px] items-center text-white justify-center">
-                <p>House</p>
-              </div>
-            </div>
-          </div>
+                  <div className="absolute inset-0 flex mt-[100px] items-center text-white justify-center">
+                    <p className="text-xl font-semibold drop-shadow-lg">
+                    </p>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </section>
+
 
 
 
