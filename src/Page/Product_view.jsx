@@ -142,7 +142,7 @@ export default function PropertyPage() {
                     <div>
                         <ul className="flex text-white gap-[30px]">
                             <li>
-                                <Link to="/">Home</Link>
+                                <Link to="/home">Home</Link>
                             </li>
                             <li>
                                 <Link to="/properties">Properties</Link>
@@ -183,7 +183,7 @@ export default function PropertyPage() {
                                 <Link to="/addpropertyform">Add Property Form</Link>
                             </MenuItem>
                             <MenuItem onClick={handleClose}>
-                                <Link to="/chiqish" className='text-red-500'>Chiqish</Link>
+                                <Link to="/" className='text-red-500'>Chiqish</Link>
                             </MenuItem>
                         </Menu>
 
@@ -705,7 +705,7 @@ export default function PropertyPage() {
                                                         </p>
                                                     </div>
                                                     <div className="flex gap-2">
-                                                        <Link to={`/product_view/${item.id}`}>
+                                                        <Link to={`/product_view`}>
                                                             <IconButton size="small">
                                                                 <ArrowOutward fontSize="small" />
                                                             </IconButton>

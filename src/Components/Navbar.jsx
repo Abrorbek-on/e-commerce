@@ -24,11 +24,12 @@ function Navbar() {
             <header className='max-w-[1920px] mx-auto bg-[#0d263b] h-[80px]'>
                 <nav className='max-w-[1500px] m-auto flex justify-between items-center h-full'>
                     <div>
-                        <img src="assets/logo.png" alt="Houzing img" />
+                        <img src="/assets/AbrorHouse.png" alt="AbroHouse Logo" className="h-[100px] bg-white" />
+
                     </div>
                     <div>
                         <ul className="flex text-white gap-[30px]">
-                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/home">Home</Link></li>
                             <li><Link to="/properties">Properties</Link></li>
                             <li><Link to="/contact">Contact</Link></li>
                         </ul>
@@ -64,7 +65,7 @@ function Navbar() {
                                 <Link to="/addpropertyform">Add Property Form</Link>
                             </MenuItem>
                             <MenuItem onClick={handleClose}>
-                                <Link to="/chiqish" className='text-red-500'>Chiqish</Link>
+                                <Link to="/" className='text-red-500'>Chiqish</Link>
                             </MenuItem>
                         </Menu>
                     </div>

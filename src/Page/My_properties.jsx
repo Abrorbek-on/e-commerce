@@ -9,6 +9,7 @@ import Footer from "../Components/Footer";
 export default function My_properties() {
     const [listings, setListings] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
     const open = Boolean(anchorEl);
 
     const handleClose = () => setAnchorEl(null);
@@ -28,6 +29,19 @@ export default function My_properties() {
             .catch(err => console.error(err));
     }, []);
 
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:4000/accommodations/${id}`)
+            .then(res => {
+                console.log("Deleted:", res.data);
+                setListings(prev => prev.filter(item => item.id !== id));
+            })
+            .catch(err => console.error(err));
+    };
+
+    const filteredListings = listings.filter((listing) =>
+        listing.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        listing.location?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <>
@@ -59,7 +73,7 @@ export default function My_properties() {
                             <MenuItem onClick={handleClose}><Link to="/favorite">Favourites</Link></MenuItem>
                             <MenuItem onClick={handleClose}><Link to="/product_view">Product view</Link></MenuItem>
                             <MenuItem onClick={handleClose}><Link to="/addpropertyform">Add Property Form</Link></MenuItem>
-                            <MenuItem onClick={handleClose}><Link to="/chiqish" className="text-red-500">Chiqish</Link></MenuItem>
+                            <MenuItem onClick={handleClose}><Link to="/" className="text-red-500">Chiqish</Link></MenuItem>
                         </Menu>
                     </div>
                 </nav>
@@ -71,6 +85,8 @@ export default function My_properties() {
                     <input
                         type="text"
                         placeholder="Search"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         className="rounded px-3 border py-1 text-sm focus:outline-blue-500"
                     />
                 </div>
@@ -88,8 +104,8 @@ export default function My_properties() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {listings.length > 0 ? (
-                                    listings.map((listing) => (
+                                {filteredListings.length > 0 ? (
+                                    filteredListings.map((listing) => (
                                         <tr key={listing.id}>
                                             <td className="p-3 flex items-center gap-3">
                                                 <div className="relative w-20 h-16 flex items-center justify-center">
@@ -131,7 +147,10 @@ export default function My_properties() {
 
                                             <td className="p-3 flex gap-2">
                                                 <Edit className="cursor-pointer text-gray-600 hover:text-blue-600" />
-                                                <Delete className="cursor-pointer text-gray-600 hover:text-red-600" />
+                                                <Delete
+                                                    className="cursor-pointer text-gray-600 hover:text-red-600"
+                                                    onClick={() => handleDelete(listing.id)}
+                                                />
                                             </td>
                                         </tr>
                                     ))

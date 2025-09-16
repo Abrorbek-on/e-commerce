@@ -39,7 +39,7 @@ export default function LoginForm() {
                     localStorage.setItem("user", JSON.stringify(data.user));
                 }
 
-                navigate("/");
+                navigate("/home");
             } else {
                 navigate("/register");
             }
@@ -57,7 +57,7 @@ export default function LoginForm() {
                     </div>
                     <div>
                         <ul className="flex text-white gap-[30px]">
-                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/home">Home</Link></li>
                             <li><Link to="/properties">Properties</Link></li>
                             <li><Link to="/contact">Contact</Link></li>
                         </ul>

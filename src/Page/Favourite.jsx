@@ -43,7 +43,7 @@ function Favourite({ userId }) {
                     </div>
                     <div>
                         <ul className="flex text-white gap-[30px]">
-                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/home">Home</Link></li>
                             <li><Link to="/properties">Properties</Link></li>
                             <li><Link to="/contact">Contact</Link></li>
                         </ul>
@@ -79,7 +79,7 @@ function Favourite({ userId }) {
                                 <Link to="/addpropertyform">Add Property Form</Link>
                             </MenuItem>
                             <MenuItem onClick={handleClose}>
-                                <Link to="/chiqish" className='text-red-500'>Chiqish</Link>
+                                <Link to="/" className='text-red-500'>Chiqish</Link>
                             </MenuItem>
                         </Menu>
                     </div>
@@ -172,7 +172,7 @@ function Favourite({ userId }) {
                                                 </p>
                                             </div>
                                             <div className="flex gap-2">
-                                                <Link to={`/product_view/${item.id}`}>
+                                                <Link to={`/product_view`}>
                                                     <IconButton size="small">
                                                         <ArrowOutward fontSize="small" />
                                                     </IconButton>

@@ -29,6 +29,8 @@ import Footer from "../Components/Footer";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import { motion } from "framer-motion";
+
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 function Chiqish() {
@@ -70,7 +72,19 @@ function Chiqish() {
                 </nav>
             </header>
 
-            <Box
+
+            <section className="max-w-[1000px] mx-auto flex justify-center items-center h-screen">
+                <motion.img
+                    src="assets/AbrorHouse.png"
+                    alt="Abror House"
+                    className="rounded-2xl"
+                    initial={{ opacity: 0, scale: 0.5, y: -200, rotate: -15 }}
+                    animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+                    transition={{ duration: 1.2, ease: "easeOut" }}
+                />
+            </section>
+
+            {/*    <Box
                 sx={{
                     position: "relative",
                     width: "100%",
@@ -576,7 +590,7 @@ function Chiqish() {
             </section>
 
 
-            <Footer />
+            <Footer /> */}
         </>
 
 

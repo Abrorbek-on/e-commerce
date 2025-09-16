@@ -243,7 +243,7 @@ export default function Home() {
                           </p>
                         </div>
                         <div className="flex gap-2">
-                          <Link to={`/product_view/${item.id}`}>
+                          <Link to={`/product_view`}>
                             <IconButton size="small">
                               <ArrowOutward fontSize="small" />
                             </IconButton>
@@ -476,7 +476,7 @@ export default function Home() {
                           </p>
                         </div>
                         <div className="flex gap-2">
-                          <Link to={`/product_view/${item.id}`}>
+                          <Link to={`/product_view/`}>
                             <IconButton size="small">
                               <ArrowOutward fontSize="small" />
                             </IconButton>

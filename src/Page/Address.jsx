@@ -109,7 +109,7 @@ const AddPropertyForm = () => {
                         </div>
                         <ul className="flex gap-8">
                             <li>
-                                <Link to="/">Home</Link>
+                                <Link to="/home">Home</Link>
                             </li>
                             <li>
                                 <Link to="/properties">Properties</Link>
@@ -138,7 +138,7 @@ const AddPropertyForm = () => {
                                 <Link to="/addpropertyform">Add Property Form</Link>
                             </MenuItem>
                             <MenuItem onClick={handleClose}>
-                                <Link to="/chiqish" className="text-red-500">
+                                <Link to="/" className="text-red-500">
                                     Chiqish
                                 </Link>
                             </MenuItem>
