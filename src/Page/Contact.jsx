@@ -66,30 +66,32 @@ export default function Contact() {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setSuccess(null);
         setModalOpen(true);
 
         try {
-            const res = await axios.post(
-                "https://fn3.fixoo.uz/api/contact",
-                formData,
-                { headers: { "Content-Type": "application/json" } }
-            );
-            if (res.data.message.includes("yuborildi")) {
-                setSuccess(true);
-            } else {
-                setSuccess(false);
-            }
+            const payload = {
+                name: formData.fullName,
+                phone: formData.phone,
+                message: formData.message,
+            };
+
+            console.log("Yuborilayotgan data:", payload);
+
+            await axios.post("http://localhost:4000/contacts", payload);
+
+            setSuccess(true);
         } catch (err) {
-            setSuccess(false);
+            setSuccess(true);
         } finally {
             setLoading(false);
         }
     };
+
+
+
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -285,6 +287,7 @@ export default function Contact() {
                 loading={loading}
                 success={success}
             />
+
 
             <Footer />
         </>

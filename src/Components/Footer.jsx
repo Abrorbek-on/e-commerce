@@ -1,4 +1,4 @@
-import { Email, Facebook, Instagram, KeyboardArrowUp, LinkedIn, LocationOn, Twitter } from '@mui/icons-material'
+import { Email, Facebook, GitHub, Instagram, KeyboardArrowUp, LinkedIn, LocationOn, Telegram, Twitter } from '@mui/icons-material'
 import { Phone } from 'lucide-react'
 import React from 'react'
 
@@ -11,23 +11,51 @@ function Footer() {
                     <div className="flex items-start mb-3">
                         <LocationOn className="text-blue-400 mr-2" />
                         <p className="text-sm">
-                            329 Queensberry Street, North Melbourne VIC 3051, Australia.
+                            Fergana vil. Toshloq tumani
                         </p>
                     </div>
                     <div className="flex items-center mb-3">
                         <Phone className="text-blue-400 mr-2" />
-                        <p className="text-sm">123 456 7890</p>
+                        <p className="text-sm">+998 90 571 2009</p>
                     </div>
                     <div className="flex items-center mb-3">
                         <Email className="text-blue-400 mr-2" />
-                        <p className="text-sm">support@houzing.com</p>
+                        <p className="text-sm">abrorjonk9@gmail.com</p>
                     </div>
 
                     <div className="flex space-x-4 mt-4">
-                        <Facebook className="cursor-pointer hover:text-blue-400" />
-                        <Twitter className="cursor-pointer hover:text-blue-400" />
-                        <Instagram className="cursor-pointer hover:text-blue-400" />
-                        <LinkedIn className="cursor-pointer hover:text-blue-400" />
+                        <a
+                            href="https://t.me/ka0o9"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Telegram className="cursor-pointer hover:text-blue-400" />
+                        </a>
+
+                        <a
+                            href="https://github.com/Abrorbek-on"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <GitHub className="cursor-pointer hover:text-blue-400" />
+                        </a>
+
+                        <a
+                            href="https://instagram.com/Abrorbek_09"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Instagram className="cursor-pointer hover:text-blue-400" />
+                        </a>
+
+                        <a
+                            href="https://linkedin.com/in/Abrorbek Karimov"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <LinkedIn className="cursor-pointer hover:text-blue-400" />
+                        </a>
+
                     </div>
                 </div>
 

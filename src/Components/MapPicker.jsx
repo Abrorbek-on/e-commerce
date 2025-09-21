@@ -7,7 +7,7 @@ function LocationMarker({ setLocation }) {
   useMapEvents({
     click(e) {
       setPosition(e.latlng);
-      setLocation(e.latlng); // Parentga jo‘natamiz
+      setLocation(e.latlng); 
     },
   });
 
@@ -17,7 +17,7 @@ function LocationMarker({ setLocation }) {
 export default function MapPicker({ setLocation }) {
   return (
     <MapContainer
-      center={[41.3111, 69.2797]} // Toshkent default
+      center={[41.3111, 69.2797]}
       zoom={12}
       style={{ height: "400px", width: "100%" }}
     >

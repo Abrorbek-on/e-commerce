@@ -95,10 +95,10 @@ function Properties() {
                         </Menu>
                     </div>
                 </nav>
-                <section className="max-w-[1500px] m-auto h-[80px]">
-                    <div className="flex gap-x-4 items-center h-full px-4">
+                <section className="max-w-[1500px] m-auto h-auto py-4 hidden md:block">
+                    <div className="flex flex-wrap gap-4 items-center h-full px-4">
                         <Button
-                            className="px-4 w-[600px] py-3.5"
+                            className="px-4 py-3.5 w-full sm:w-[600px] text-left"
                             variant="outlined"
                             startIcon={<HouseIcon />}
                         >
@@ -106,7 +106,7 @@ function Properties() {
                         </Button>
 
                         <Button
-                            className="px-4 w-[130px] py-3.5"
+                            className="px-4 py-3.5 w-full sm:w-[130px]"
                             variant="outlined"
                             startIcon={<CheckCircleIcon />}
                         >
@@ -114,7 +114,7 @@ function Properties() {
                         </Button>
 
                         <Button
-                            className="px-4 w-[130px] py-3.5"
+                            className="px-4 py-3.5 w-full sm:w-[130px]"
                             variant="outlined"
                             startIcon={<PaidIcon />}
                         >
@@ -122,7 +122,7 @@ function Properties() {
                         </Button>
 
                         <Button
-                            className="px-4 w-[130px] py-3.5"
+                            className="px-4 py-3.5 w-full sm:w-[130px]"
                             variant="outlined"
                             startIcon={<TuneIcon />}
                         >
@@ -130,7 +130,7 @@ function Properties() {
                         </Button>
 
                         <Button
-                            className="px-4 py-3.5 w-[200px]"
+                            className="px-4 py-3.5 w-full sm:w-[200px]"
                             variant="contained"
                             startIcon={<SearchIcon />}
                         >
@@ -138,6 +138,7 @@ function Properties() {
                         </Button>
                     </div>
                 </section>
+
 
             </header>
 
@@ -151,7 +152,7 @@ function Properties() {
                         </h1>
                     </div>
 
-                    <div className="max-w-[1200px] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px] gap-6">
+                    <div className="max-w-[1200px] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px] gap-6 justify-items-center">
                         {properties.map((item) => {
                             const avgRating = item.Rating?.length
                                 ? (
@@ -254,6 +255,7 @@ function Properties() {
                     </Button>
                 </div>
             </main>
+
 
             <Footer />
         </>

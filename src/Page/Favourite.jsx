@@ -18,6 +18,7 @@ function Favourite({ userId }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [properties, setProperties] = useState([]);
     const open = Boolean(anchorEl);
+    const [like, setlike] = useState(false)
 
     const handleClick = (event) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
@@ -94,7 +95,8 @@ function Favourite({ userId }) {
                         <h1 className="text-gray-500">Siz like qilgan mulklar</h1>
                     </div>
 
-                    <div className="max-w-[1200px] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px] gap-6">
+                    {/* GRID ORTADA */}
+                    <div className="max-w-[1200px] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px] gap-6 justify-center justify-items-center">
                         {properties.map((item) => {
                             const avgRating = item.Rating?.length
                                 ? (
@@ -179,11 +181,11 @@ function Favourite({ userId }) {
                                                 </Link>
                                                 <Checkbox
                                                     color="error"
+                                                    onClick={() => setlike(!like)}
                                                     icon={<FavoriteBorder />}
                                                     checkedIcon={<Favorite />}
                                                     defaultChecked
                                                 />
-
                                             </div>
                                         </div>
                                     </div>
@@ -193,6 +195,7 @@ function Favourite({ userId }) {
                     </div>
                 </section>
             </div>
+
 
             <Footer />
         </>

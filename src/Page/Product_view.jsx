@@ -63,7 +63,7 @@ export default function PropertyPage() {
         const fetchReviews = async () => {
             try {
 
-                const res = await axios.get(`http://localhost:4000/ratings/accommodation/${propertyId}`);
+                const res = await axios.get(`http://localhost:4000/ratings/accommodations/${propertyId}`);
                 console.log("Reviews data:", res.data);
                 console.log("Property ID:", propertyId);
 

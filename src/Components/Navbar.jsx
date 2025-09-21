@@ -24,8 +24,7 @@ function Navbar() {
             <header className='max-w-[1920px] mx-auto bg-[#0d263b] h-[80px]'>
                 <nav className='max-w-[1500px] m-auto flex justify-between items-center h-full'>
                     <div>
-                        <img src="/assets/AbrorHouse.png" alt="AbroHouse Logo" className="h-[100px] bg-white" />
-
+                        <img src="assets/logo.png" alt="Houzing Logo" />
                     </div>
                     <div>
                         <ul className="flex text-white gap-[30px]">
@@ -71,10 +70,10 @@ function Navbar() {
                     </div>
                 </nav>
 
-                <section className="max-w-[1500px] m-auto h-[80px]">
-                    <div className="flex gap-x-4 items-center h-full px-4">
+                <section className="max-w-[1500px] m-auto h-auto py-4">
+                    <div className="flex flex-wrap gap-4 items-center h-full px-4">
                         <Button
-                            className="px-4 w-[600px] py-3.5"
+                            className="px-4 py-3.5 w-full sm:w-[600px] text-left"
                             variant="outlined"
                             startIcon={<HouseIcon />}
                         >
@@ -82,7 +81,7 @@ function Navbar() {
                         </Button>
 
                         <Button
-                            className="px-4 w-[130px] py-3.5"
+                            className="px-4 py-3.5 w-full sm:w-[130px]"
                             variant="outlined"
                             startIcon={<CheckCircleIcon />}
                         >
@@ -90,7 +89,7 @@ function Navbar() {
                         </Button>
 
                         <Button
-                            className="px-4 w-[130px] py-3.5"
+                            className="px-4 py-3.5 w-full sm:w-[130px]"
                             variant="outlined"
                             startIcon={<PaidIcon />}
                         >
@@ -98,7 +97,7 @@ function Navbar() {
                         </Button>
 
                         <Button
-                            className="px-4 w-[130px] py-3.5"
+                            className="px-4 py-3.5 w-full sm:w-[130px]"
                             variant="outlined"
                             startIcon={<TuneIcon />}
                         >
@@ -106,7 +105,7 @@ function Navbar() {
                         </Button>
 
                         <Button
-                            className="px-4 py-3.5 w-[200px]"
+                            className="px-4 py-3.5 w-full sm:w-[200px]"
                             variant="contained"
                             startIcon={<SearchIcon />}
                         >

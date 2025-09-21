@@ -21,40 +21,49 @@ export default function My_properties() {
             ? `http://localhost:4000/accommodations/my-properties/${userId}`
             : `http://localhost:4000/accommodations/my-properties`;
 
-        axios.get(url)
-            .then(res => {
+        axios
+            .get(url)
+            .then((res) => {
                 console.log("RES DATA:", res.data);
                 setListings(res.data);
             })
-            .catch(err => console.error(err));
+            .catch((err) => console.error(err));
     }, []);
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:4000/accommodations/${id}`)
-            .then(res => {
+        axios
+            .delete(`http://localhost:4000/accommodations/${id}`)
+            .then((res) => {
                 console.log("Deleted:", res.data);
-                setListings(prev => prev.filter(item => item.id !== id));
+                setListings((prev) => prev.filter((item) => item.id !== id));
             })
-            .catch(err => console.error(err));
+            .catch((err) => console.error(err));
     };
 
-    const filteredListings = listings.filter((listing) =>
-        listing.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        listing.location?.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredListings = listings.filter(
+        (listing) =>
+            listing.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            listing.location?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
         <>
             <header className="max-w-[1920px] mx-auto bg-[#0d263b] h-[80px]">
-                <nav className="max-w-[1500px] m-auto flex justify-between items-center h-full">
+                <nav className="max-w-[1500px] m-auto flex justify-between items-center h-full px-4">
                     <div>
                         <img src="assets/logo.png" alt="Houzing img" />
                     </div>
-                    <div>
+                    <div className="hidden sm:block">
                         <ul className="flex text-white gap-[30px]">
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/properties">Properties</Link></li>
-                            <li><Link to="/contact">Contact</Link></li>
+                            <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/properties">Properties</Link>
+                            </li>
+                            <li>
+                                <Link to="/contact">Contact</Link>
+                            </li>
                         </ul>
                     </div>
                     <div>
@@ -68,30 +77,106 @@ export default function My_properties() {
                             onClose={handleClose}
                             PaperProps={{ style: { marginTop: "10px" } }}
                         >
-                            <MenuItem onClick={handleClose}><Link to="/my_profile">My profile</Link></MenuItem>
-                            <MenuItem onClick={handleClose}><Link to="/my_properties">My Properties</Link></MenuItem>
-                            <MenuItem onClick={handleClose}><Link to="/favorite">Favourites</Link></MenuItem>
-                            <MenuItem onClick={handleClose}><Link to="/product_view">Product view</Link></MenuItem>
-                            <MenuItem onClick={handleClose}><Link to="/addpropertyform">Add Property Form</Link></MenuItem>
-                            <MenuItem onClick={handleClose}><Link to="/" className="text-red-500">Chiqish</Link></MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_profile">My profile</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/my_properties">My Properties</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/favorite">Favourites</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/product_view">Product view</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/addpropertyform">Add Property Form</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link to="/" className="text-red-500">
+                                    Chiqish
+                                </Link>
+                            </MenuItem>
                         </Menu>
                     </div>
                 </nav>
             </header>
 
             <section className="max-w-[1500px] m-auto p-6">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <h2 className="text-2xl font-semibold">My properties</h2>
                     <input
                         type="text"
                         placeholder="Search"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="rounded px-3 border py-1 text-sm focus:outline-blue-500"
+                        className="rounded px-3 border py-1 text-sm focus:outline-blue-500 w-full sm:w-[250px]"
                     />
                 </div>
 
-                <div className="max-w-[1500px] m-auto p-6 shadow">
+                <div className="block sm:hidden mt-4 space-y-4">
+                    {filteredListings.length > 0 ? (
+                        filteredListings.map((listing) => (
+                            <div
+                                key={listing.id}
+                                className="rounded-lg p-4 shadow flex gap-3"
+                            >
+                                <div className="w-24 h-20 relative flex-shrink-0">
+                                    {listing.house_img && listing.house_img.length > 0 ? (
+                                        <img
+                                            src={listing.house_img[0]}
+                                            alt={listing.title}
+                                            className="w-full h-full object-cover rounded"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-gray-300 flex items-center justify-center text-xs rounded">
+                                            IMG
+                                        </div>
+                                    )}
+                                    {listing.featured && (
+                                        <span className="absolute top-0 left-0 bg-blue-600 text-white text-[10px] px-2 py-[2px] rounded">
+                                            Featured
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="flex flex-col justify-between flex-1">
+                                    <div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-sm font-semibold">
+                                                {listing.title}
+                                            </span>
+                                            <span className="bg-gray-800 text-white text-[10px] px-2 py-[2px] rounded">
+                                                {listing.listing_type}
+                                            </span>
+                                        </div>
+                                        <div className="text-xs text-gray-500">
+                                            {listing.location}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="line-through text-gray-400 text-xs">
+                                            ${listing.price || listing.total_price}
+                                        </div>
+                                        <div className="text-blue-700 font-bold">
+                                            ${listing.total_price}
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                        <Edit className="cursor-pointer text-gray-600 hover:text-blue-600" />
+                                        <Delete
+                                            className="cursor-pointer text-gray-600 hover:text-red-600"
+                                            onClick={() => handleDelete(listing.id)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-center text-gray-500 mt-4">No properties found</p>
+                    )}
+                </div>
+
+                <div className="hidden sm:block max-w-[1500px] m-auto p-6 shadow mt-4">
                     <div className="rounded-lg overflow-hidden">
                         <table className="w-full text-left">
                             <thead className="bg-white">
@@ -128,20 +213,26 @@ export default function My_properties() {
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-sm font-semibold">{listing.title}</span>
+                                                        <span className="text-sm font-semibold">
+                                                            {listing.title}
+                                                        </span>
                                                         <span className="bg-gray-800 text-white text-[10px] px-2 py-[2px] rounded">
                                                             {listing.listing_type}
                                                         </span>
                                                     </div>
-                                                    <div className="text-xs text-gray-500">{listing.location}</div>
+                                                    <div className="text-xs text-gray-500">
+                                                        {listing.location}
+                                                    </div>
                                                     <div className="line-through text-gray-400 text-xs">
                                                         ${listing.price || listing.total_price}
                                                     </div>
-                                                    <div className="text-blue-700 font-bold">${listing.total_price}</div>
+                                                    <div className="text-blue-700 font-bold">
+                                                        ${listing.total_price}
+                                                    </div>
                                                 </div>
                                             </td>
 
-                                            <td className="p-3 text-sm">{listing.build_year || '-'}</td>
+                                            <td className="p-3 text-sm">{listing.build_year || "-"}</td>
                                             <td className="p-3 text-sm">Pending</td>
                                             <td className="p-3 text-sm">—</td>
 
@@ -156,13 +247,15 @@ export default function My_properties() {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="5" className="p-3 text-center text-gray-500">
+                                        <td
+                                            colSpan="5"
+                                            className="p-3 text-center text-gray-500"
+                                        >
                                             No properties found
                                         </td>
                                     </tr>
                                 )}
                             </tbody>
-
                         </table>
                     </div>
                 </div>

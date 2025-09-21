@@ -74,17 +74,19 @@ export default function Home() {
         sx={{
           position: "relative",
           width: "100%",
-          height: "600px",
+          height: { xs: "400px", md: "600px" }, // kichik ekranlar uchun balandlik kamayadi
           backgroundImage: "url(assets/unsplash_2gDwlIim3Uw.png)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           color: "white",
           display: "flex",
           alignItems: "center",
-          marginTop: "90px",
+          mt: { xs: "60px", md: "90px" },
           justifyContent: "center",
+          px: { xs: 2, md: 0 }, // mobil uchun yonlardan padding
         }}
       >
+        {/* Gradient overlay */}
         <Box
           sx={{
             position: "absolute",
@@ -94,78 +96,115 @@ export default function Home() {
           }}
         />
 
-        <Box sx={{ position: "relative", textAlign: "center", zIndex: 1 }}>
-          <Typography variant="h3" fontWeight="bold" gutterBottom>
+        <Box
+          sx={{
+            position: "relative",
+            textAlign: "center",
+            zIndex: 1,
+            maxWidth: "900px",
+            width: "100%",
+          }}
+        >
+          <Typography
+            variant="h3"
+            fontWeight="bold"
+            gutterBottom
+            sx={{
+              fontSize: { xs: "1.8rem", sm: "2.2rem", md: "3rem" }, // responsive font
+            }}
+          >
             Skyper Pool Partment
           </Typography>
-          <Typography variant="body1" gutterBottom>
+
+          <Typography
+            variant="body1"
+            gutterBottom
+            sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
+          >
             112 Glenwood Ave Hyde Park, Boston, MA
           </Typography>
 
+          {/* Info grid */}
           <Grid
             container
-            spacing={4}
+            spacing={{ xs: 1, sm: 2, md: 4 }}
             justifyContent="center"
             alignItems="center"
             sx={{ mt: 2, mb: 2 }}
           >
-            <Grid item>
+            <Grid item xs={6} sm="auto">
               <Box display="flex" alignItems="center" gap={1}>
-                <HotelIcon />
-                <Typography>4 beds</Typography>
+                <HotelIcon fontSize="small" />
+                <Typography variant="body2">4 beds</Typography>
               </Box>
             </Grid>
-            <Grid item>
+            <Grid item xs={6} sm="auto">
               <Box display="flex" alignItems="center" gap={1}>
-                <BathtubIcon />
-                <Typography>5 baths</Typography>
+                <BathtubIcon fontSize="small" />
+                <Typography variant="body2">5 baths</Typography>
               </Box>
             </Grid>
-            <Grid item>
+            <Grid item xs={6} sm="auto">
               <Box display="flex" alignItems="center" gap={1}>
-                <DirectionsCarIcon />
-                <Typography>Garage</Typography>
+                <DirectionsCarIcon fontSize="small" />
+                <Typography variant="body2">Garage</Typography>
               </Box>
             </Grid>
-            <Grid item>
+            <Grid item xs={6} sm="auto">
               <Box display="flex" alignItems="center" gap={1}>
-                <SquareFootIcon />
-                <Typography>1200 Sq Ft</Typography>
+                <SquareFootIcon fontSize="small" />
+                <Typography variant="body2">1200 Sq Ft</Typography>
               </Box>
             </Grid>
           </Grid>
 
-          <Typography variant="h4" fontWeight="bold" gutterBottom>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ fontSize: { xs: "1.5rem", md: "2rem" } }}
+          >
             $5,250/mo
           </Typography>
 
           <Button
             variant="outlined"
-            color=""
-            sx={{ mt: 2, px: 4, py: 1 }}
+            sx={{
+              mt: 2,
+              px: { xs: 3, md: 4 },
+              py: 1,
+              fontSize: { xs: "0.8rem", md: "1rem" },
+            }}
           >
             Read More
           </Button>
         </Box>
       </Box>
 
-      <section className="bg-[#595959] h-[500px]">
-        <div className="max-w-[1500px] m-auto text-center">
+
+      <section className="bg-[#595959] py-10">
+        <div className="max-w-[1500px] m-auto text-center px-4">
           <p className="text-[30px]">Recommended</p>
           <h1 className="text-gray-500">
             Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.
           </h1>
         </div>
 
-        <div className="max-w-[1200px] m-auto mt-[20px]">
+        <div className="max-w-[1200px] m-auto mt-6 px-4">
           <Swiper
-            slidesPerView={3}
             spaceBetween={20}
             navigation={true}
             modules={[Navigation]}
             loop={true}
             className="mySwiper"
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 }
+            }}
           >
+
+
             {properties.map((item) => {
               const avgRating = item.Rating?.length
                 ? (
@@ -176,12 +215,10 @@ export default function Home() {
 
               return (
                 <SwiperSlide key={item.id}>
-                  <div className="w-[350px] overflow-hidden shadow-lg bg-white rounded-lg">
+                  <div className="w-full overflow-hidden shadow-lg bg-white rounded-lg">
                     <div className="relative">
                       <img
-                        src={
-                          item.house_img?.[0] || "https://via.placeholder.com/350x200"
-                        }
+                        src={item.house_img?.[0] || "https://via.placeholder.com/350x200"}
                         alt={item.title}
                         className="w-full h-[200px] object-cover"
                       />
@@ -265,37 +302,32 @@ export default function Home() {
       </section>
 
 
-      <section className="max-w-[1500px] m-auto">
-        <div className="text-center mt-[20px]">
-          <p className="text-[30px] mt-[100px]">Why Choose Us?</p>
-          <h1 className="text-gray-500 mb-[60px]">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>
-        </div>
-        <div className="flex justify-between">
-          <div>
-            <img className="ml-[70px]" src="assets/Vector.png" alt="" /><br />
-            <p className="text-center"><strong className="text-[#0d263b]">
-              Trusted By Thousands</strong> <br /> <span className="text-[#838485]">With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
-          </div>
-
-          <div>
-            <img className="ml-[70px]" src="assets/Vector.png" alt="" /><br />
-            <p className="text-center"><strong className="text-[#0d263b]">
-              Trusted By Thousands</strong> <br /> <span className="text-[#838485]">With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
-          </div>
-
-          <div>
-            <img className="ml-[70px]" src="assets/Vector.png" alt="" /><br />
-            <p className="text-center"><strong className="text-[#0d263b]">
-              Trusted By Thousands</strong> <br /> <span className="text-[#838485]">With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
-          </div>
-
-          <div>
-            <img className="ml-[70px]" src="assets/Vector.png" alt="" /><br />
-            <p className="text-center"><strong className="text-[#0d263b]">
-              Trusted By Thousands</strong> <br /> <span className="text-[#838485]">With over 1 million+ homes <br /> for sale available on the <br /> website, Trulia can match <br /> you with a house you will <br /> want to call home.</span></p>
-          </div>
+      <section className="max-w-[1500px] m-auto px-4">
+        <div className="text-center mt-10">
+          <p className="text-[30px] mt-[50px]">Why Choose Us?</p>
+          <h1 className="text-gray-500 mb-10">
+            Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.
+          </h1>
         </div>
 
+        <div className="grid grid-cols-1 max-sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          {Array(4).fill(0).map((_, idx) => (
+            <div key={idx} className="flex flex-col items-center">
+              <img src="assets/Vector.png" alt="" className="w-16 mb-4" />
+              <p>
+                <strong className="text-[#0d263b]">Trusted By Thousands</strong>
+                <br />
+                <span className="text-[#838485]">
+                  With over 1 million+ homes <br />
+                  for sale available on the <br />
+                  website, Trulia can match <br />
+                  you with a house you will <br />
+                  want to call home.
+                </span>
+              </p>
+            </div>
+          ))}
+        </div>
       </section>
 
 
@@ -314,6 +346,12 @@ export default function Home() {
             navigation
             modules={[Navigation]}
             loop={true}
+            className="mySwiper"
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 }
+            }}
           >
             {categories.map((item) => (
               <SwiperSlide key={item.id}>
@@ -356,6 +394,7 @@ export default function Home() {
           marginTop: "90px",
           justifyContent: "center",
         }}
+
       >
         <Box
           sx={{
@@ -397,7 +436,12 @@ export default function Home() {
             navigation={true}
             modules={[Navigation]}
             loop={true}
-            className="mySwiper"
+            className="mySwiperli"
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 }
+            }}
           >
             {properties.map((item) => {
               const avgRating = item.Rating?.length
@@ -499,66 +543,38 @@ export default function Home() {
       </section>
 
 
-      <section className="max-w-[1500px] m-auto mt-[300px]">
+      <section className="max-w-[1500px] m-auto mt-[300px] px-4">
         <div className="text-center mt-[20px]">
           <strong className="text-[30px]">Testimonials</strong>
-          <h1 className="text-gray-500">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</h1>
-        </div>
-        <div className="flex justify-between mt-[20px]">
-
-          <div className="max-w-md mx-auto  rounded-lg shadow-sm p-6 text-center bg-white h-[170px] w-[25%]">
-
-            <p className="text-gray-600 text-lg italic">
-              I believe in lifelong learning and Skola is a great place to learn from
-              experts. I've learned a lot and recommend it to all my friends
-            </p>
-
-            <div className="mt-10 flex flex-col items-center">
-              <img
-                src="https://randomuser.me/api/portraits/men/32.jpg"
-                alt="Marvin McKinney"
-                className="w-14 h-14 rounded-full border-2 border-white shadow-md -mt-8"
-              />
-              <h3 className="mt-2 font-semibold text-gray-900">Marvin McKinney</h3>
-              <p className="text-gray-500 text-sm">Designer</p>
-            </div>
-          </div><div className="max-w-md mx-auto  rounded-lg shadow-sm p-6 text-center bg-white h-[170px] w-[25%]">
-
-            <p className="text-gray-600 text-lg italic">
-              I believe in lifelong learning and Skola is a great place to learn from
-              experts. I've learned a lot and recommend it to all my friends
-            </p>
-
-            <div className="mt-10 flex flex-col items-center">
-              <img
-                src="https://randomuser.me/api/portraits/men/32.jpg"
-                alt="Marvin McKinney"
-                className="w-14 h-14 rounded-full border-2 border-white shadow-md -mt-8"
-              />
-              <h3 className="mt-2 font-semibold text-gray-900">Marvin McKinney</h3>
-              <p className="text-gray-500 text-sm">Designer</p>
-            </div>
-          </div><div className="max-w-md mx-auto rounded-lg shadow-sm p-6 text-center bg-white h-[170px] w-[25%]">
-
-            <p className="text-gray-600 text-lg italic">
-              I believe in lifelong learning and Skola is a great place to learn from
-              experts. I've learned a lot and recommend it to all my friends
-            </p>
-
-            <div className="mt-10 flex flex-col items-center ">
-              <img
-                src="https://randomuser.me/api/portraits/men/32.jpg"
-                alt="Marvin McKinney"
-                className="w-14 h-14 rounded-full border-2 border-white shadow-md -mt-8"
-              />
-              <h3 className="mt-2 font-semibold text-gray-900">Marvin McKinney</h3>
-              <p className="text-gray-500 text-sm">Designer</p>
-            </div>
-          </div>
+          <h1 className="text-gray-500">
+            Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.
+          </h1>
         </div>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-[20px]">
+          {Array(3).fill(0).map((_, i) => (
+            <div
+              key={i}
+              className="max-w-md mx-auto rounded-lg shadow-sm p-6 text-center bg-white"
+            >
+              <p className="text-gray-600 text-lg italic">
+                I believe in lifelong learning and Skola is a great place to learn from
+                experts. I've learned a lot and recommend it to all my friends
+              </p>
+
+              <div className="mt-10 flex flex-col items-center">
+                <img
+                  src="https://randomuser.me/api/portraits/men/32.jpg"
+                  alt="Marvin McKinney"
+                  className="w-14 h-14 rounded-full border-2 border-white shadow-md -mt-8"
+                />
+                <h3 className="mt-2 font-semibold text-gray-900">Marvin McKinney</h3>
+                <p className="text-gray-500 text-sm">Designer</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
-
 
       <Footer />
 
